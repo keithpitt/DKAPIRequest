@@ -215,7 +215,10 @@ static NSMutableArray * sharedStubbings;
     NSString * didUseCache = [request didUseCachedResponse] ? @"YES" : @"NO";
     
     // Some logging
-	DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Time:          %f seconds\n  Status Code:   %i\n  Content Type:  %@\n  Cached:        %@\n  Response Body: %@\n\n", timePassed, statusCode, contentType, didUseCache, responseBody);
+    void (^logResponse)(id) = ^(id response) {
+        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Time:          %f seconds\nStatus Code:   %i\nContent Type:  %@\nCached:        %@\nResponse Body:\n%@",
+                        timePassed, statusCode, contentType, didUseCache, response);
+    };
     
     // Get the inteceptors
     NSArray * interceptors = [DKAPIRequest interceptors];
@@ -228,6 +231,9 @@ static NSMutableArray * sharedStubbings;
             
             // Parse the JSON content
             id json = [responseBody JSONValue];
+            
+            // Log the response
+            logResponse(json);
             
             // Was the request successfull?
             bool success = [[json objectForKey:@"status"] hasPrefix:@"ok"];
@@ -263,9 +269,16 @@ static NSMutableArray * sharedStubbings;
                 
             }
 
+        } else {
+            
+            // Log the response
+            logResponse(responseBody);
+            
         }
         
     } else {
+        
+        logResponse(responseBody);
         
         DKAPIResponse * response = [DKAPIResponse responseWithError:[self localizedErrorFromStatusCode:statusCode]
                                                             success:NO];

@@ -13,7 +13,7 @@
 
 #ifdef DEBUG
 
-    #define DKAPIRequestLog(level, ...)    LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"[DKAPIRequest]",level,__VA_ARGS__)
+    #define DKAPIRequestLog(level, ...)    LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"DKAPIRequest",level,__VA_ARGS__)
 
 #else
 
