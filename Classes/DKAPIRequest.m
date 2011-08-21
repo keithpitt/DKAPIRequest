@@ -10,8 +10,10 @@
 
 #import "DKAPIRequestStub.h"
 #import "DKAPIResponse.h"
-#import "JSON.h"
 #import "DKFile.h"
+#import "DKAPILogger.h"
+
+#import "JSON.h"
 
 @implementation DKAPIRequest
 
@@ -137,7 +139,7 @@ static NSMutableArray * sharedStubbings;
 
 - (void)requestFailed:(ASIHTTPRequest *)request {
     
-    NSLog(@"[DKAPIRequest] Connection Failed: %@", request.error);
+    DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Connection Failed: %@", request.error);
     
     // Error callback
     if (errorCallback) {
@@ -213,7 +215,7 @@ static NSMutableArray * sharedStubbings;
     NSString * didUseCache = [request didUseCachedResponse] ? @"YES" : @"NO";
     
     // Some logging
-	NSLog(@"\n[DKAPIRequest Response]  \n  Time:          %f seconds\n  Status Code:   %i\n  Content Type:  %@\n  Cached:        %@\n  Response Body: %@\n\n", timePassed, statusCode, contentType, didUseCache, responseBody);
+	DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Time:          %f seconds\n  Status Code:   %i\n  Content Type:  %@\n  Cached:        %@\n  Response Body: %@\n\n", timePassed, statusCode, contentType, didUseCache, responseBody);
     
     // Get the inteceptors
     NSArray * interceptors = [DKAPIRequest interceptors];
@@ -281,7 +283,7 @@ static NSMutableArray * sharedStubbings;
     
     // If we don't have a successCallback or errorCallback, blow up.
     if (!successCallback && !errorCallback) {
-        NSLog(@"[DKAPIRequest] No successCallback or errorCallback defined for this request.");
+        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"No successCallback or errorCallback defined for this request.");
         abort();
     }
     
@@ -360,9 +362,9 @@ static NSMutableArray * sharedStubbings;
     
     // Some debugging information
     if(serializedResults && [serializedResults objectForKey:@"data"] && self.httpMethod != HTTP_GET_VERB)
-        NSLog(@"\n[DKAPIRequest]\n  %@ %@\n%@\n", request.requestMethod, [request.url absoluteURL], self.data);
+        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n%@\n", request.requestMethod, [request.url absoluteURL], self.data);
     else
-        NSLog(@"\n[DKAPIRequest]\n  %@ %@\n", request.requestMethod, [request.url absoluteURL]);
+        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n", request.requestMethod, [request.url absoluteURL]);
     
     return request;
     
