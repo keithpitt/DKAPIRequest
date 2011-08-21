@@ -413,7 +413,7 @@ static NSMutableArray * sharedStubbings;
     // If we have gotten this far, that means the part is not an NSArray or NSDictionary,
     // so lets just add it as raw data.
     
-    if ([part isKindOfClass:DKFile.class]) {
+    if ([part isKindOfClass:[DKFile class]]) {
         
         DKFile * fileUpload = (DKFile *)part;
         

@@ -7,7 +7,6 @@
 //
 
 #import "ASIFormDataRequest.h"
-#import "DKRestQuery.h"
 #import "DKAPIResponse.h"
 
 typedef id (^DKAPIRequestStubCallback)(ASIFormDataRequest * formRequest);
