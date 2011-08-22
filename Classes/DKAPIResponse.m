@@ -91,8 +91,6 @@
 
 - (void)setResponseDictionary:(NSDictionary *)dictionary {
     
-    NSLog(@"%@", dictionary);
-    
     self.data = [dictionary objectForKey:@"response"];
     self.errors = [dictionary objectForKey:@"errors"];
     self.status = [dictionary objectForKey:@"status"];
