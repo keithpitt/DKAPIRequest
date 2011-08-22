@@ -12,6 +12,12 @@
 		530D4B7F14022FF200A33292 /* DKAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B7814022FF200A33292 /* DKAPIRequest.m */; };
 		530D4B8014022FF200A33292 /* DKAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B7A14022FF200A33292 /* DKAPIResponse.m */; };
 		530D4B8114022FF200A33292 /* DKAPIStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B7C14022FF200A33292 /* DKAPIStub.m */; };
+		530D4B901402327F00A33292 /* DKAPIInterceptorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B8B1402327F00A33292 /* DKAPIInterceptorSpec.m */; };
+		530D4B911402327F00A33292 /* DKAPIRequestSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B8C1402327F00A33292 /* DKAPIRequestSpec.m */; };
+		530D4B921402327F00A33292 /* DKAPIResponseSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B8D1402327F00A33292 /* DKAPIResponseSpec.m */; };
+		530D4B931402327F00A33292 /* DKAPIStubSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B8E1402327F00A33292 /* DKAPIStubSpec.m */; };
+		530D4B95140232D200A33292 /* DKAPIFormDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B94140232D200A33292 /* DKAPIFormDataSpec.m */; };
+		530D4B97140237EE00A33292 /* OCMock-iPhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530D4B96140237EE00A33292 /* OCMock-iPhone.framework */; };
 		537874B014010A0A00D9B746 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 537874AF14010A0A00D9B746 /* main.m */; };
 		537874BD14010A1F00D9B746 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874BC14010A1F00D9B746 /* UIKit.framework */; };
 		537874BF14010A2500D9B746 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874BE14010A2500D9B746 /* Foundation.framework */; };
@@ -71,6 +77,13 @@
 		530D4B7A14022FF200A33292 /* DKAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIResponse.m; sourceTree = "<group>"; };
 		530D4B7B14022FF200A33292 /* DKAPIStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIStub.h; sourceTree = "<group>"; };
 		530D4B7C14022FF200A33292 /* DKAPIStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIStub.m; sourceTree = "<group>"; };
+		530D4B891402323700A33292 /* SpecHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecHelper.h; sourceTree = "<group>"; };
+		530D4B8B1402327F00A33292 /* DKAPIInterceptorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIInterceptorSpec.m; sourceTree = "<group>"; };
+		530D4B8C1402327F00A33292 /* DKAPIRequestSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIRequestSpec.m; sourceTree = "<group>"; };
+		530D4B8D1402327F00A33292 /* DKAPIResponseSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIResponseSpec.m; sourceTree = "<group>"; };
+		530D4B8E1402327F00A33292 /* DKAPIStubSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIStubSpec.m; sourceTree = "<group>"; };
+		530D4B94140232D200A33292 /* DKAPIFormDataSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIFormDataSpec.m; sourceTree = "<group>"; };
+		530D4B96140237EE00A33292 /* OCMock-iPhone.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "OCMock-iPhone.framework"; path = "External/OCMock-iPhone.framework"; sourceTree = "<group>"; };
 		5378749F14010A0A00D9B746 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		537874AB14010A0A00D9B746 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
 		537874AF14010A0A00D9B746 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -191,6 +204,7 @@
 				537874BD14010A1F00D9B746 /* UIKit.framework in Frameworks */,
 				537874D514010A5700D9B746 /* Cedar-iPhone.framework in Frameworks */,
 				537874D614010A5700D9B746 /* libExpecta-ios-universal.a in Frameworks */,
+				530D4B97140237EE00A33292 /* OCMock-iPhone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +255,7 @@
 			children = (
 				53F18BB61401539200E1A6E8 /* libicucore.dylib */,
 				53F18BB41401538800E1A6E8 /* libz.dylib */,
+				530D4B96140237EE00A33292 /* OCMock-iPhone.framework */,
 				53F18BB81401539E00E1A6E8 /* CoreGraphics.framework */,
 				53F18BB21401533100E1A6E8 /* CFNetwork.framework */,
 				53F18BAF1401532800E1A6E8 /* SystemConfiguration.framework */,
@@ -256,6 +271,11 @@
 			isa = PBXGroup;
 			children = (
 				537874AA14010A0A00D9B746 /* Support */,
+				530D4B8B1402327F00A33292 /* DKAPIInterceptorSpec.m */,
+				530D4B8C1402327F00A33292 /* DKAPIRequestSpec.m */,
+				530D4B94140232D200A33292 /* DKAPIFormDataSpec.m */,
+				530D4B8D1402327F00A33292 /* DKAPIResponseSpec.m */,
+				530D4B8E1402327F00A33292 /* DKAPIStubSpec.m */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -263,6 +283,7 @@
 		537874AA14010A0A00D9B746 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				530D4B891402323700A33292 /* SpecHelper.h */,
 				537874AB14010A0A00D9B746 /* Specs-Info.plist */,
 				537874AF14010A0A00D9B746 /* main.m */,
 				537874B114010A0A00D9B746 /* Specs-Prefix.pch */,
@@ -618,6 +639,11 @@
 				530D4B7F14022FF200A33292 /* DKAPIRequest.m in Sources */,
 				530D4B8014022FF200A33292 /* DKAPIResponse.m in Sources */,
 				530D4B8114022FF200A33292 /* DKAPIStub.m in Sources */,
+				530D4B901402327F00A33292 /* DKAPIInterceptorSpec.m in Sources */,
+				530D4B911402327F00A33292 /* DKAPIRequestSpec.m in Sources */,
+				530D4B921402327F00A33292 /* DKAPIResponseSpec.m in Sources */,
+				530D4B931402327F00A33292 /* DKAPIStubSpec.m in Sources */,
+				530D4B95140232D200A33292 /* DKAPIFormDataSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

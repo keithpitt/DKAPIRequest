@@ -91,6 +91,8 @@
 
 - (void)setResponseDictionary:(NSDictionary *)dictionary {
     
+    NSLog(@"%@", dictionary);
+    
     self.data = [dictionary objectForKey:@"response"];
     self.errors = [dictionary objectForKey:@"errors"];
     self.status = [dictionary objectForKey:@"status"];
@@ -101,7 +103,7 @@
 
 - (NSError *)error {
     
-    if (!error) {
+    if (!error && ([errors count] > 0 || statusCode > 0)) {
         
         // Default error message
         NSString * errorMessage;
@@ -135,10 +137,6 @@
                     break;
                     
             }
-            
-        } else {
-            
-            errorMessage = NSLocalizedString(@"Unknown Error", nil);
             
         }
         
