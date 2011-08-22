@@ -8,15 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+@class ASIHTTPRequest;
+@class DKAPIRequest;
+
 #define DKAPIResponseStatusKey @"DKAPIResponseStatusKey"
 
 @interface DKAPIResponse : NSObject
 
+@property (nonatomic, assign) NSInteger statusCode;
+@property (nonatomic, assign) NSString * contentType;
+@property (nonatomic, assign) NSDictionary * headers;
+
+@property (nonatomic, assign) NSString * status;
 @property (nonatomic, assign) id data;
-@property (nonatomic, assign) NSError * error;
+@property (nonatomic, assign) NSArray * errors;
 @property (nonatomic) bool success;
 
-+ (id)responseWithJSON:(NSDictionary*)json success:(bool)successfull;
-+ (id)responseWithError:(NSError*)error success:(bool)successfull;
+@property (nonatomic, assign) NSError * error;
+
+- (id)initWithHTTPRequest:(ASIHTTPRequest *)httpRequest apiRequest:(DKAPIRequest *)apiRequest;
+
+- (void)setResponseDictionary:(NSDictionary *)object;
 
 @end

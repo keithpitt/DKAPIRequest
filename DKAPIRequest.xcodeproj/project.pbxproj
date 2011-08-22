@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		533260F9140207F800F8C7A0 /* DKAPIFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 533260F8140207F800F8C7A0 /* DKAPIFormData.m */; };
+		533260FC1402080600F8C7A0 /* DKAPIInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 533260FB1402080600F8C7A0 /* DKAPIInterceptor.m */; };
 		537874B014010A0A00D9B746 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 537874AF14010A0A00D9B746 /* main.m */; };
 		537874BD14010A1F00D9B746 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874BC14010A1F00D9B746 /* UIKit.framework */; };
 		537874BF14010A2500D9B746 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874BE14010A2500D9B746 /* Foundation.framework */; };
@@ -34,7 +36,7 @@
 		53F18BF8140153D400E1A6E8 /* UIAlertView+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F18BE9140153D400E1A6E8 /* UIAlertView+Shortcuts.m */; };
 		53F18BF9140153D400E1A6E8 /* UIViewController+ParentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F18BEC140153D400E1A6E8 /* UIViewController+ParentController.m */; };
 		53FFD0DC1401233200E6B764 /* DKAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0D71401233200E6B764 /* DKAPIRequest.m */; };
-		53FFD0DD1401233200E6B764 /* DKAPIRequestStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0D91401233200E6B764 /* DKAPIRequestStub.m */; };
+		53FFD0DD1401233200E6B764 /* DKAPIStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0D91401233200E6B764 /* DKAPIStub.m */; };
 		53FFD0DE1401233200E6B764 /* DKAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0DB1401233200E6B764 /* DKAPIResponse.m */; };
 		53FFD1051401234C00E6B764 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0E11401234C00E6B764 /* ASIAuthenticationDialog.m */; };
 		53FFD1061401234C00E6B764 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0E41401234C00E6B764 /* ASIDataCompressor.m */; };
@@ -56,6 +58,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		533260ED1401F64F00F8C7A0 /* DKAPILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKAPILogger.h; path = Classes/DKAPILogger.h; sourceTree = "<group>"; };
+		533260F7140207F800F8C7A0 /* DKAPIFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIFormData.h; sourceTree = "<group>"; };
+		533260F8140207F800F8C7A0 /* DKAPIFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIFormData.m; sourceTree = "<group>"; };
+		533260FA1402080600F8C7A0 /* DKAPIInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIInterceptor.h; sourceTree = "<group>"; };
+		533260FB1402080600F8C7A0 /* DKAPIInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIInterceptor.m; sourceTree = "<group>"; };
+		533260FE1402088A00F8C7A0 /* DKAPICacheStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPICacheStrategy.h; sourceTree = "<group>"; };
 		5378749F14010A0A00D9B746 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		537874AB14010A0A00D9B746 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
 		537874AF14010A0A00D9B746 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -121,12 +129,11 @@
 		53F18BE9140153D400E1A6E8 /* UIAlertView+Shortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Shortcuts.m"; sourceTree = "<group>"; };
 		53F18BEB140153D400E1A6E8 /* UIViewController+ParentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ParentController.h"; sourceTree = "<group>"; };
 		53F18BEC140153D400E1A6E8 /* UIViewController+ParentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ParentController.m"; sourceTree = "<group>"; };
-		53F18BFA140153E900E1A6E8 /* DKAPILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPILogger.h; sourceTree = "<group>"; };
 		53FFD0D51401233200E6B764 /* DKAPIInterceptorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKAPIInterceptorProtocol.h; path = Classes/DKAPIInterceptorProtocol.h; sourceTree = "<group>"; };
 		53FFD0D61401233200E6B764 /* DKAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKAPIRequest.h; path = Classes/DKAPIRequest.h; sourceTree = "<group>"; };
 		53FFD0D71401233200E6B764 /* DKAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DKAPIRequest.m; path = Classes/DKAPIRequest.m; sourceTree = "<group>"; };
-		53FFD0D81401233200E6B764 /* DKAPIRequestStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKAPIRequestStub.h; path = Classes/DKAPIRequestStub.h; sourceTree = "<group>"; };
-		53FFD0D91401233200E6B764 /* DKAPIRequestStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DKAPIRequestStub.m; path = Classes/DKAPIRequestStub.m; sourceTree = "<group>"; };
+		53FFD0D81401233200E6B764 /* DKAPIStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKAPIStub.h; path = Classes/DKAPIStub.h; sourceTree = "<group>"; };
+		53FFD0D91401233200E6B764 /* DKAPIStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DKAPIStub.m; path = Classes/DKAPIStub.m; sourceTree = "<group>"; };
 		53FFD0DA1401233200E6B764 /* DKAPIResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKAPIResponse.h; path = Classes/DKAPIResponse.h; sourceTree = "<group>"; };
 		53FFD0DB1401233200E6B764 /* DKAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DKAPIResponse.m; path = Classes/DKAPIResponse.m; sourceTree = "<group>"; };
 		53FFD0E01401234C00E6B764 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -434,14 +441,19 @@
 		53FFD0D31401232A00E6B764 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				53F18BFA140153E900E1A6E8 /* DKAPILogger.h */,
 				53FFD0D51401233200E6B764 /* DKAPIInterceptorProtocol.h */,
+				533260FA1402080600F8C7A0 /* DKAPIInterceptor.h */,
+				533260FB1402080600F8C7A0 /* DKAPIInterceptor.m */,
+				533260ED1401F64F00F8C7A0 /* DKAPILogger.h */,
+				533260FE1402088A00F8C7A0 /* DKAPICacheStrategy.h */,
 				53FFD0D61401233200E6B764 /* DKAPIRequest.h */,
 				53FFD0D71401233200E6B764 /* DKAPIRequest.m */,
-				53FFD0D81401233200E6B764 /* DKAPIRequestStub.h */,
-				53FFD0D91401233200E6B764 /* DKAPIRequestStub.m */,
 				53FFD0DA1401233200E6B764 /* DKAPIResponse.h */,
 				53FFD0DB1401233200E6B764 /* DKAPIResponse.m */,
+				53FFD0D81401233200E6B764 /* DKAPIStub.h */,
+				53FFD0D91401233200E6B764 /* DKAPIStub.m */,
+				533260F7140207F800F8C7A0 /* DKAPIFormData.h */,
+				533260F8140207F800F8C7A0 /* DKAPIFormData.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -570,7 +582,7 @@
 			files = (
 				537874B014010A0A00D9B746 /* main.m in Sources */,
 				53FFD0DC1401233200E6B764 /* DKAPIRequest.m in Sources */,
-				53FFD0DD1401233200E6B764 /* DKAPIRequestStub.m in Sources */,
+				53FFD0DD1401233200E6B764 /* DKAPIStub.m in Sources */,
 				53FFD0DE1401233200E6B764 /* DKAPIResponse.m in Sources */,
 				53FFD1051401234C00E6B764 /* ASIAuthenticationDialog.m in Sources */,
 				53FFD1061401234C00E6B764 /* ASIDataCompressor.m in Sources */,
@@ -604,6 +616,8 @@
 				53F18BF7140153D400E1A6E8 /* NSString+Initializers.m in Sources */,
 				53F18BF8140153D400E1A6E8 /* UIAlertView+Shortcuts.m in Sources */,
 				53F18BF9140153D400E1A6E8 /* UIViewController+ParentController.m in Sources */,
+				533260F9140207F800F8C7A0 /* DKAPIFormData.m in Sources */,
+				533260FC1402080600F8C7A0 /* DKAPIInterceptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +658,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -680,7 +694,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

@@ -13,53 +13,46 @@
 #define HTTP_POST_VERB @"POST"
 #define HTTP_DELETE_VERB @"DELETE"
 
-#import "DKAPIResponse.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "ASIFormDataRequest.h"
 #import "ASIDownloadCache.h"
-#import "DKAPIInterceptorProtocol.h"
 
-@class DKAPIRequest;
-@class DKAPIRequestStub;
+#import "DKAPICacheStrategy.h"
 
-typedef void (^DKAPIRequestSuccessCallback)(DKAPIResponse *);
-typedef void (^DKAPIRequestErrorCallback)(DKAPIResponse *);
+@class DKAPIResponse;
+
+typedef void (^DKAPIRequestFinishBlock)(DKAPIResponse *, NSError *);
 
 @interface DKAPIRequest : NSObject <ASIHTTPRequestDelegate> {
     
-    NSDate * requestStartTime;
+    ASIFormDataRequest * formDataRequest;
     
 }
 
-@property (nonatomic, copy) DKAPIRequestSuccessCallback successCallback;
-@property (nonatomic, copy) DKAPIRequestErrorCallback errorCallback;
+@property (nonatomic, retain) NSDictionary * parameters;
 
-@property (nonatomic, retain) NSString * requestURL;
-@property (nonatomic, retain) NSString * httpMethod;
-@property (nonatomic, retain) NSDictionary * data;
-@property (nonatomic, retain) NSDictionary * files;
-
-@property (nonatomic, assign) ASICachePolicy cachePolicy;
-@property (nonatomic, assign) ASICacheStoragePolicy cacheStoragePolicy;
-@property (nonatomic, retain) ASIDownloadCache * downloadCache;
+@property (nonatomic, assign) DKAPICacheStrategy cacheStrategy;
 
 @property (nonatomic, retain) id uploadProgressDelegate;
+
 @property (nonatomic, retain) id downloadProgressDelegate;
 
-+ (NSArray *)interceptors;
-+ (void)addInterceptor:(id <DKAPIInterceptorProtocol>)interceptor;
-+ (void)removeInterceptor:(id <DKAPIInterceptorProtocol>)interceptor;
+@property (readonly) NSURL * url;
 
-+ (void)stubNextRequest:(DKAPIRequestStub *)requestStub;
+@property (readonly) NSString * requestMethod;
 
-- (void)get:(NSString *)url;
-- (void)post:(NSString *)url;
-- (void)put:(NSString *)url;
-- (void)delete:(NSString *)url;
+@property (readonly) NSDate * requestStartTime;
 
-- (ASIFormDataRequest *)request;
-- (void)send;
+@property (readonly) ASIFormDataRequest * formDataRequest;
 
-- (NSDictionary *)serialize:(NSDictionary *)dataToSerialize;
+@property (nonatomic, copy) DKAPIRequestFinishBlock finishBlock;
+
+- (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)parameters;
+
+- (void)setCacheStrategy:(DKAPICacheStrategy)strategy;
+
+- (void)setDownloadCache:(ASIDownloadCache *)downloadCache;
+
+- (void)startAsynchronous;
  
 @end

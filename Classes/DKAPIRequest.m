@@ -8,125 +8,130 @@
 
 #import "DKAPIRequest.h"
 
-#import "DKAPIRequestStub.h"
-#import "DKAPIResponse.h"
-#import "DKFile.h"
-#import "DKAPILogger.h"
+#import "DKAPIStub.h"
+#import "DKAPIInterceptor.h"
 
-#import "JSON.h"
+#import "DKAPIResponse.h"
+#import "DKAPIFormData.h"
+
+#import "DKAPILogger.h"
 
 @implementation DKAPIRequest
 
-@synthesize successCallback, errorCallback;
-@synthesize requestURL, data, files, httpMethod;
+@synthesize finishBlock, parameters, formDataRequest;
+
 @synthesize uploadProgressDelegate, downloadProgressDelegate;
-@synthesize cachePolicy, downloadCache, cacheStoragePolicy;
 
-static NSMutableArray * sharedInterceptors;
-static NSMutableArray * sharedStubbings;
+@synthesize cacheStrategy;
 
-+ (NSArray *)interceptors {
-    
-    return sharedInterceptors;
-    
-}
+@synthesize requestStartTime;
 
-+ (void)addInterceptor:(id <DKAPIInterceptorProtocol>)interceptor {
-    
-    // If the shared inteceptor doesn't exist
-    if (!sharedInterceptors) {
-        sharedInterceptors = [NSMutableArray new];
+- (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)params {
+
+    if ((self = [super init])) {
+        
+        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:requestURL];
+
+        formDataRequest.requestMethod = method;
+        formDataRequest.delegate = self;
+        formDataRequest.timeOutSeconds = 120;
+        formDataRequest.shouldAttemptPersistentConnection = NO;
+        formDataRequest.showAccurateProgress = YES;
+        
+        self.parameters = params;
+
     }
+
+    return self;
+
+}
+
+- (NSURL *)url {
     
-    // Add it
-    [sharedInterceptors addObject:interceptor];
+    return formDataRequest.url;
     
 }
 
-+ (void)removeInterceptor:(id <DKAPIInterceptorProtocol>)interceptor {
+- (NSString *)requestMethod {
     
-    [sharedInterceptors removeObject:interceptor];
-    
-}
-
-+ (void)stubNextRequest:(DKAPIRequestStub *)requestStub {
-    
-    if (!sharedStubbings) {
-        sharedStubbings = [NSMutableArray new];
-    }
-    
-    // Add it
-    [sharedStubbings addObject:requestStub];
+    return formDataRequest.requestMethod;
     
 }
 
-- (void)get:(NSString *)url {
+- (void)setDownloadCache:(ASIDownloadCache *)downloadCache {
     
-    // Set the HTTP method to "GET"
-    self.httpMethod = HTTP_GET_VERB;
-    self.requestURL = url;
-    
-    // Send the request
-    [self send];
-    
-}
-- (void)post:(NSString *)url{
-    
-    // Set the HTTP method to "POST"
-    self.httpMethod = HTTP_POST_VERB;
-    self.requestURL = url;
-    
-    // Send the request
-    [self send];
+    formDataRequest.downloadCache = downloadCache;
     
 }
 
-- (void)put:(NSString *)url{
+- (void)setCacheStrategy:(DKAPICacheStrategy)strategy {
     
-    // Set the HTTP method to "PUT"
-    self.httpMethod = HTTP_PUT_VERB;
-    self.requestURL = url;
+    cacheStrategy = strategy;
     
-    // Send the request
-    [self send];
-    
-}
-
-- (void)delete:(NSString *)url{
-    
-    // Set the HTTP method to "DELETE"
-    self.httpMethod = HTTP_DELETE_VERB;
-    self.requestURL = url;
-    
-    // Send the request
-    [self send];
+//    if (cachePolicy)
+//        request.cachePolicy = cachePolicy;
+//    
+//    if (cacheStoragePolicy)
+//        request.cacheStoragePolicy = cacheStoragePolicy;
     
 }
 
-- (void)send {
+- (void)startAsynchronous {
     
-    ASIFormDataRequest * formDataRequest = [self request];
-    
+    // Start the timer
     requestStartTime = [[NSDate alloc] init];
     
+    // Ensure we always have post data
+    NSMutableDictionary * postData = self.parameters ? [[self.parameters mutableCopy] autorelease] : [NSMutableDictionary dictionary];
+    
+    // Pass the post data to the interceptors for changing
+    [DKAPIInterceptor performDelegation:@selector(interceptedAPIRequest:preparePostData:) withObject:self withObject:postData];
+    
+    // If we now have any data
+    if ([[postData allKeys] count] > 0) {
+        
+        // Create the form data
+        DKAPIFormData * formData = [[DKAPIFormData alloc] initWithDictionary:postData];
+        
+        if ([formDataRequest.requestMethod isEqualToString:HTTP_GET_VERB]) {
+            
+            // If this is a GET request, add the parameters to the current URL
+            formDataRequest.url = [formData urlWithPostData:self.url];
+            
+        } else {
+            
+            // Add any files found in the serialized results
+            for (NSDictionary * param in formData.files)
+                [formDataRequest setFile:[param objectForKey:@"value"] forKey:[param objectForKey:@"key"]];
+            
+            // Add the post data
+            for (NSDictionary * param in formData.post)
+                [formDataRequest setPostValue:[param objectForKey:@"value"] forKey:[param objectForKey:@"key"]];
+            
+        }
+        
+        [formData release];
+        
+    }
+    
+    // Some debuggiong information
+    #ifdef DEBUG
+        
+        if(self.parameters && formDataRequest.requestMethod != HTTP_GET_VERB)
+            DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n%@\n", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], self.parameters);
+        else
+            DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n", formDataRequest.requestMethod, [formDataRequest.url absoluteURL]);
+        
+    #endif
+    
+    // Try and stub the response
+    DKAPIResponse * stubbedResponse = [DKAPIStub performWithFormDataRequest:formDataRequest];
+    
     // Should we use a stubbing?
-    if (sharedStubbings && [sharedStubbings count] > 0) {
-        
-        // Grab the stubbed response to use
-        DKAPIRequestStub * requestStub = (DKAPIRequestStub *)[sharedStubbings lastObject];
-        
-        DKAPIResponse * response = [requestStub responseWithFormDataRequest:formDataRequest];
-        
-        // Remove it from the stubbings array
-        [sharedStubbings removeObject:response];
-        
-        // Toggle between calling the success/error callback
-        if (response.success && errorCallback)
-            successCallback(response);
-        else if (errorCallback)
-            errorCallback(response);
-        
-        [requestStub release];
+    if (stubbedResponse) {
+                
+        // Run the finish block right away if we have one
+        if (finishBlock) finishBlock(stubbedResponse, stubbedResponse.error);
         
     } else {
         
@@ -141,323 +146,45 @@ static NSMutableArray * sharedStubbings;
     
     DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Connection Failed: %@", request.error);
     
-    // Error callback
-    if (errorCallback) {
-        DKAPIResponse * response = [DKAPIResponse responseWithError:request.error success:NO];
-        errorCallback(response);
-    }
+    if (finishBlock)
+        finishBlock(nil, request.error);
     
     // Release the reference to self we made earlier
     [self release];
-    
-}
-
-- (NSString *)addParamsToUrl:(NSString *)baseURL params:(NSArray *)params {
-    
-    NSMutableArray * parts = [[NSMutableArray alloc] init];
-    
-    for (NSDictionary * param in params) {
-        [parts addObject:[NSString stringWithFormat:@"%@=%@",
-                          [param objectForKey:@"key"],
-                          [param objectForKey:@"value"]]];
-    }
-    
-    NSString * joined = [parts componentsJoinedByString:@"&"];
-    
-    [parts release];
-    
-    NSString * format = ([baseURL rangeOfString:@"?"].location == NSNotFound) ? @"%@?%@" : @"%@&%@";
-    NSString * finalized = [NSString stringWithFormat:format, baseURL, joined];
-    
-    return [finalized stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-}
-
-- (NSError *)localizedErrorFromStatusCode:(int)statusCode {
-    
-    NSString * message;
-    
-    switch (statusCode) {
-        case 404:
-            message = NSLocalizedString(@"Server could not be found (404)", nil);
-            break;
-            
-        case 500:
-            message = NSLocalizedString(@"Server error (500)", nil);
-            break;
-            
-        default:
-            message = [NSString stringWithFormat:@"An unknown error occured (%i)", statusCode];
-            break;
-    }
-    
-    NSDictionary * userInfo = [NSDictionary dictionaryWithObject:message forKey:NSLocalizedDescriptionKey];
-    
-    return [NSError errorWithDomain:@"DKAPIRequest" code:statusCode userInfo:userInfo];
     
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request {
+    
+    // Grab the global dispatch queue
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    // Handle the response in a thread
+    dispatch_async(queue, ^{
+        
+        // Create our response
+        DKAPIResponse * response = [[DKAPIResponse alloc] initWithHTTPRequest:request apiRequest:self];
+        
+        // Perform the delegation on the interceptors
+        if ([DKAPIInterceptor performDelegation:@selector(interceptedAPIRequest:handleAPIResponse:) withObject:self withObject:response]) {
+            
+            // Finish by calling our block
+            if (finishBlock) finishBlock(response, response.error);
+            
+        }
+        
+        // Release the reference to self we made earlier
+        [self release];
+        
+    });    
 	
-	// Find the response body for the request
-	NSString * responseBody = [request responseString];
-    
-    // Find the content type of the request
-	NSString * contentType = [[request responseHeaders] objectForKey:@"Content-Type"];
-    
-    // Convert the response status code to an integer
-    int statusCode = [request responseStatusCode];
-    
-    // How long did the request take?
-    NSTimeInterval timePassed = [requestStartTime timeIntervalSinceNow] * -1;
-    [requestStartTime release], requestStartTime = nil;
-    
-    NSString * didUseCache = [request didUseCachedResponse] ? @"YES" : @"NO";
-    
-    // Some logging
-    void (^logResponse)(id) = ^(id response) {
-        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Time:          %f seconds\nStatus Code:   %i\nContent Type:  %@\nCached:        %@\nResponse Body:\n%@",
-                        timePassed, statusCode, contentType, didUseCache, response);
-    };
-    
-    // Get the inteceptors
-    NSArray * interceptors = [DKAPIRequest interceptors];
-    
-    // Did we get a 200 response?
-    if (statusCode == 200) {
-        
-        // Did we get a json-like response?
-        if ([contentType rangeOfString:@"json"].location != NSNotFound) {
-            
-            // Parse the JSON content
-            id json = [responseBody JSONValue];
-            
-            // Log the response
-            logResponse(json);
-            
-            // Was the request successfull?
-            bool success = [[json objectForKey:@"status"] hasPrefix:@"ok"];
-            
-            DKAPIResponse * response = [DKAPIResponse responseWithJSON:json
-                                                               success:success];
-            
-            // If we have any, loop over them, and the run "preparePostData" method on them.
-            if (interceptors) {
-                
-                BOOL runCallbacks = YES;
-                
-                for (id<DKAPIInterceptorProtocol> inteceptor in interceptors) {
-                    if ([inteceptor respondsToSelector:@selector(interceptedAPIRequest:handleAPIResponse:)]) {
-                        if (![inteceptor interceptedAPIRequest:self handleAPIResponse:response])
-                            runCallbacks = NO;
-                    }
-                }
-                
-                // Are we still able to run the callbacks?
-                if (runCallbacks)
-                    if (success)
-                        successCallback(response);
-                    else if (errorCallback)
-                        errorCallback(response);
-                
-            } else {
-                
-                if (success)
-                    successCallback(response);
-                else if (errorCallback)
-                    errorCallback(response);
-                
-            }
-
-        } else {
-            
-            // Log the response
-            logResponse(responseBody);
-            
-        }
-        
-    } else {
-        
-        logResponse(responseBody);
-        
-        DKAPIResponse * response = [DKAPIResponse responseWithError:[self localizedErrorFromStatusCode:statusCode]
-                                                            success:NO];
-        
-        errorCallback(response);
-        
-    }
-    
-    // Release the reference to self we made earlier
-    [self release];
-	
-}
-
-- (ASIFormDataRequest *)request {
-    
-    // If we don't have a successCallback or errorCallback, blow up.
-    if (!successCallback && !errorCallback) {
-        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"No successCallback or errorCallback defined for this request.");
-        abort();
-    }
-    
-    // Increment the retain count of self because we are doing a callback
-    [self retain];
-    
-    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:self.requestURL]];
-    
-    request.requestMethod = self.httpMethod;
-    request.delegate = self;
-    request.timeOutSeconds = 120;
-    request.shouldAttemptPersistentConnection = NO;
-    request.showAccurateProgress = YES;
-    
-    if (cachePolicy)
-        request.cachePolicy = cachePolicy;
-    
-    if (cacheStoragePolicy)
-        request.cacheStoragePolicy = cacheStoragePolicy;
-    
-    if (downloadCache)
-        request.downloadCache = downloadCache;
-    
-    if (uploadProgressDelegate)
-        request.uploadProgressDelegate = uploadProgressDelegate;
-    
-    if (downloadProgressDelegate)
-        request.downloadProgressDelegate = downloadProgressDelegate;
-        
-    NSDictionary * serializedResults = nil;
-    NSMutableDictionary * changeablePostData = self.data ? [[self.data mutableCopy] autorelease] : [NSMutableDictionary dictionary];
-    
-    // Get the inteceptors
-    NSArray * interceptors = [DKAPIRequest interceptors];
-    
-    // If we have any, loop over them, and the run "preparePostData" method on them.
-    if (interceptors)
-        for (id<DKAPIInterceptorProtocol> inteceptor in interceptors) {
-            if ([inteceptor respondsToSelector:@selector(interceptedAPIRequest:preparePostData:)])
-                [inteceptor interceptedAPIRequest:self preparePostData:changeablePostData];
-        }
-    
-    // If we now have any data
-    if ([[changeablePostData allKeys] count] > 0) {
-        
-        // Serialize the post data
-        serializedResults = [self serialize:changeablePostData];
-        
-        // Add any files found in the serialized results
-        for (NSDictionary * param in [serializedResults objectForKey:@"files"]) {
-            [request setFile:[param objectForKey:@"value"]
-                      forKey:[param objectForKey:@"key"]];
-        }
-        
-        // Add the post data
-        if ([self.httpMethod isEqualToString:HTTP_GET_VERB]) {
-            
-            request.url = [NSURL URLWithString:[self addParamsToUrl:self.requestURL
-                                                             params:[serializedResults objectForKey:@"data"]]];
-            
-        } else {            
-            
-            for (NSDictionary * param in [serializedResults objectForKey:@"data"])
-                [request setPostValue:[param objectForKey:@"value"]
-                               forKey:[param objectForKey:@"key"]];
-            
-        }
-        
-    }
-    
-    // Attach files if its not a GET request
-    if (self.files && ![httpMethod isEqualToString:HTTP_GET_VERB]) {
-        for (NSString * param in [files allKeys])
-            [request setFile:[files objectForKey:param] forKey:param];
-    }
-    
-    // Some debugging information
-    if(serializedResults && [serializedResults objectForKey:@"data"] && self.httpMethod != HTTP_GET_VERB)
-        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n%@\n", request.requestMethod, [request.url absoluteURL], self.data);
-    else
-        DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n", request.requestMethod, [request.url absoluteURL]);
-    
-    return request;
-    
-}
-
-- (void)_serializeData:(id)part parentKey:(NSString*)parentKey serialized:(NSMutableArray *)serialized files:(NSMutableArray *)collectedFiles {
-    
-    NSString * newKey;
-    
-    if ([part isKindOfClass:NSDictionary.class]) {
-        
-        NSEnumerator * enumerator = [part keyEnumerator];
-        id currentKey;
-        
-        while ((currentKey = [enumerator nextObject])) {
-            
-            // Create a key for the value. If there is a parentKey, "post" for example, prepend
-            // the key from this dictionary onto it, so "post" and "key", becomes "post[key]. However,
-            // if there is no parentKey (first round of recursion) then just use the
-            // currentKey.
-            newKey = parentKey != nil ? [NSString stringWithFormat:@"%@[%@]", parentKey, currentKey] : currentKey;
-            
-            // Recursion...
-            [self _serializeData:[part objectForKey:currentKey] parentKey:newKey serialized:serialized files:collectedFiles];
-            
-        }
-        
-        return;
-        
-    }
-    
-    if ([part isKindOfClass:NSArray.class]) {
-        
-        for (id value in part) {
-            
-            // Append [] to the parentKey
-            newKey = [NSString stringWithFormat:@"%@[]", parentKey];
-            
-            // Recursion...
-            [self _serializeData:value parentKey:newKey serialized:serialized files:collectedFiles];
-            
-        }
-        
-        return;
-        
-    }
-    
-    // If we have gotten this far, that means the part is not an NSArray or NSDictionary,
-    // so lets just add it as raw data.
-    
-    if ([part isKindOfClass:[DKFile class]]) {
-        
-        DKFile * fileUpload = (DKFile *)part;
-        
-        [collectedFiles addObject:[NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", fileUpload.path, @"value", nil]];
-        
-    } else {
-    
-        [serialized addObject:[NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", part, @"value", nil]];
-        
-    }
-    
-    return;
-    
-}
-
-- (NSDictionary *)serialize:(NSDictionary*)dataToSerialize {
-    
-    NSMutableArray * serialized = [NSMutableArray array];
-    NSMutableArray * collectedFiles = [NSMutableArray array];
-                      
-    [self _serializeData:dataToSerialize parentKey:nil serialized:serialized files:collectedFiles];
-    
-    return [NSDictionary dictionaryWithObjectsAndKeys:serialized, @"data", collectedFiles, @"files", nil];
-    
 }
 
 - (void)dealloc {
     
+    [formDataRequest release];
     [requestStartTime release];
+    
     [uploadProgressDelegate release];
     [downloadProgressDelegate release];
     
