@@ -10,6 +10,8 @@
 
 @interface DKAPIInterceptor : NSObject
 
++ (NSMutableArray *)interceptors;
+
 + (void)addInterceptor:(id <DKAPIInterceptorProtocol>)interceptor;
 + (void)removeInterceptor:(id <DKAPIInterceptorProtocol>)interceptor;
 
