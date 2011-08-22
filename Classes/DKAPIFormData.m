@@ -14,25 +14,22 @@
 
 @synthesize post, files;
 
-- (void)traverse:(id)part parentKey:(NSString*)parentKey {
+- (void)traverse:(id)part parentKey:(NSString *)parentKey {
     
     NSString * newKey;
     
     if ([part isKindOfClass:NSDictionary.class]) {
         
-        NSEnumerator * enumerator = [part keyEnumerator];
-        id currentKey;
-        
-        while ((currentKey = [enumerator nextObject])) {
+        for (id key in [part allKeys]) {
             
             // Create a key for the value. If there is a parentKey, "post" for example, prepend
             // the key from this dictionary onto it, so "post" and "key", becomes "post[key]. However,
             // if there is no parentKey (first round of recursion) then just use the
             // currentKey.
-            newKey = parentKey != nil ? [NSString stringWithFormat:@"%@[%@]", parentKey, currentKey] : currentKey;
+            newKey = parentKey != nil ? [NSString stringWithFormat:@"%@[%@]", parentKey, key] : key;
             
             // Recursion...
-            [self traverse:[part objectForKey:currentKey] parentKey:newKey];
+            [self traverse:[part objectForKey:key] parentKey:newKey];
             
         }
         
