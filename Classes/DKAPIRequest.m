@@ -68,11 +68,27 @@
     
     cacheStrategy = strategy;
     
-//    if (cachePolicy)
-//        request.cachePolicy = cachePolicy;
-//    
-//    if (cacheStoragePolicy)
-//        request.cacheStoragePolicy = cacheStoragePolicy;
+    switch (strategy) {
+            
+        case DKAPICacheStrategySession:
+            
+            formDataRequest.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+            
+            break;
+            
+        case DKAPICacheStrategyPersisted:
+            
+            formDataRequest.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
+            
+            break;
+            
+        case DKAPICacheStrategyCoreData:
+            
+            // This is handled by DKRest...
+            
+            break;
+
+    }
     
 }
 
