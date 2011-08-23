@@ -45,6 +45,8 @@ typedef void (^DKAPIRequestFinishBlock)(DKAPIResponse *, NSError *);
 
 @property (nonatomic, copy) DKAPIRequestFinishBlock finishBlock;
 
++ (void)requestWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)parameters finishBlock:(DKAPIRequestFinishBlock)finishBlock delegate:(id)delegate;
+
 - (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)parameters;
 
 - (void)setCacheStrategy:(DKAPICacheStrategy)strategy;

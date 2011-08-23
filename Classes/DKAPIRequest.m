@@ -23,6 +23,20 @@
 
 @synthesize url, requestMethod, finishBlock, parameters, formDataRequest, delegate, cacheStrategy, requestStartTime;
 
++ (void)requestWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)parameters finishBlock:(DKAPIRequestFinishBlock)finishBlock delegate:(id)delegate {
+    
+    // Create the API request
+    DKAPIRequest * apiRequest = [[DKAPIRequest alloc] initWithURL:requestURL requestMethod:method parameters:parameters];
+    
+    // Set the finishBlock and the delegate
+    apiRequest.finishBlock = finishBlock;
+    apiRequest.delegate = delegate;
+    
+    // Kick off the request
+    [apiRequest startAsynchronous];
+    
+}
+
 - (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)params {
 
     if ((self = [super init])) {
@@ -30,17 +44,16 @@
         // Set local properties
         self.url = requestURL;
         self.requestMethod = requestMethod;
+        self.parameters = params;
         
         // Create the ASIFormDataRequest
-        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:self.url];
+        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:requestURL];
         formDataRequest.requestMethod = self.requestMethod;
         formDataRequest.delegate = self;
         formDataRequest.timeOutSeconds = 120;
         formDataRequest.shouldAttemptPersistentConnection = NO;
         formDataRequest.showAccurateProgress = YES;
         
-        self.parameters = params;
-
     }
 
     return self;
@@ -136,7 +149,7 @@
     #endif
     
     // Try and stub the response
-    DKAPIResponse * stubbedResponse = [DKAPIStub performWithFormDataRequest:formDataRequest];
+    DKAPIResponse * stubbedResponse = [DKAPIStub performWithAPIRequest:self];
     
     // Should we use a stubbing?
     if (stubbedResponse) {
@@ -214,6 +227,9 @@
 }
 
 - (void)dealloc {
+    
+    [url release];
+    [requestMethod release];
     
     [formDataRequest release];
     [requestStartTime release];

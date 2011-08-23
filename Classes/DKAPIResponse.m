@@ -20,6 +20,12 @@
 
 @synthesize statusCode, contentType, headers;
 
++ (id)responseWithResponseDictionary:(NSDictionary *)dictionary {
+    
+    return [[[self alloc] initWithResponseDictionary:dictionary] autorelease];
+    
+}
+
 - (id)initWithHTTPRequest:(ASIHTTPRequest *)httpRequest apiRequest:(DKAPIRequest *)apiRequest {
     
     if ((self = [super init])) {
@@ -84,6 +90,15 @@
         }
         
     }
+    
+    return self;
+    
+}
+
+- (id)initWithResponseDictionary:(NSDictionary *)dictionary {
+    
+    if ((self = [super init]))
+        [self setResponseDictionary:dictionary];
     
     return self;
     

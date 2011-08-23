@@ -8,6 +8,8 @@
 
 #import "DKAPIStub.h"
 
+#import "DKAPIRequest.h"
+
 @implementation DKAPIStub
 
 @synthesize stubBlock;
@@ -34,7 +36,7 @@ static NSMutableArray * stubs;
     
 }
 
-+ (DKAPIResponse *)performWithFormDataRequest:(ASIFormDataRequest *)formDataRequest {
++ (DKAPIResponse *)performWithAPIRequest:(DKAPIRequest *)apiRequest {
     
     // Do we have any stubs?
     if ([[self stubs] count] == 0)
@@ -44,7 +46,7 @@ static NSMutableArray * stubs;
     DKAPIStub * stub = (DKAPIStub *)[stubs lastObject];
     
     // Run the stub
-    DKAPIResponse * response = [stub responseWithFormDataRequest:formDataRequest];
+    DKAPIResponse * response = [stub responseWithAPIRequest:apiRequest];
     
     // Remove it from list
     [stubs removeObject:response];
@@ -62,9 +64,9 @@ static NSMutableArray * stubs;
     
 }
 
-- (DKAPIResponse *)responseWithFormDataRequest:(ASIFormDataRequest *)formRequest {
+- (DKAPIResponse *)responseWithAPIRequest:(DKAPIRequest *)apiRequest {
     
-    return (DKAPIResponse *)self.stubBlock(formRequest);
+    return (DKAPIResponse *)self.stubBlock(apiRequest);
     
 }
 

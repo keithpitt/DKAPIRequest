@@ -6,10 +6,9 @@
 //  Copyright 2011 Mostly Disco. All rights reserved.
 //
 
-#import "ASIFormDataRequest.h"
 #import "DKAPIResponse.h"
 
-typedef id (^DKAPIStubBlock)(ASIFormDataRequest * formRequest);
+typedef id (^DKAPIStubBlock)(DKAPIRequest * apiRequest);
 
 @interface DKAPIStub : NSObject
 
@@ -17,10 +16,10 @@ typedef id (^DKAPIStubBlock)(ASIFormDataRequest * formRequest);
 
 + (DKAPIStub *)stubWithBlock:(DKAPIStubBlock)block;
 
-+ (DKAPIResponse *)performWithFormDataRequest:(ASIFormDataRequest *)formDataRequest;
++ (DKAPIResponse *)performWithAPIRequest:(DKAPIRequest *)apiRequest;
 
 - (id)initWithBlock:(DKAPIStubBlock)block;
 
-- (DKAPIResponse *)responseWithFormDataRequest:(ASIFormDataRequest *)formRequest;
+- (DKAPIResponse *)responseWithAPIRequest:(DKAPIRequest *)apiRequest;
 
 @end
