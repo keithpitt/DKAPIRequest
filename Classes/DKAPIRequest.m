@@ -215,7 +215,7 @@
 
 - (NSString *)description {
     
-    return [NSString stringWithFormat:@"<DKAPIRequest: %@ %@>", self.requestMethod, self.url];
+    return [NSString stringWithFormat:@"<DKAPIRequest: %@ %@ %@>", self.requestMethod, self.url, self.parameters];
     
 }
 
