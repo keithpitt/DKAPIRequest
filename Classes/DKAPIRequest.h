@@ -33,6 +33,8 @@ typedef void (^DKAPIRequestFinishBlock)(DKAPIResponse *, NSError *);
 
 @property (nonatomic, assign) DKAPICacheStrategy cacheStrategy;
 
+@property (nonatomic, assign) ASIDownloadCache * downloadCache;
+
 @property (nonatomic, retain) id delegate;
 
 @property (nonatomic, retain) NSURL * url;

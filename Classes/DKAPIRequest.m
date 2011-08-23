@@ -21,7 +21,8 @@
 
 @implementation DKAPIRequest
 
-@synthesize url, requestMethod, finishBlock, parameters, formDataRequest, delegate, cacheStrategy, requestStartTime;
+@synthesize url, requestMethod, finishBlock, parameters, formDataRequest,
+            delegate, cacheStrategy, requestStartTime, downloadCache;
 
 + (void)requestWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)parameters finishBlock:(DKAPIRequestFinishBlock)finishBlock delegate:(id)delegate {
     
@@ -71,12 +72,6 @@
     
 }
 
-- (void)setDownloadCache:(ASIDownloadCache *)downloadCache {
-    
-    formDataRequest.downloadCache = downloadCache;
-    
-}
-
 - (void)setCacheStrategy:(DKAPICacheStrategy)strategy {
     
     cacheStrategy = strategy;
@@ -104,6 +99,7 @@
     // Set the URL and the request method
     formDataRequest.url = url;
     formDataRequest.requestMethod = requestMethod;
+    formDataRequest.downloadCache = downloadCache;
     
     // Start the timer
     requestStartTime = [[NSDate alloc] init];
@@ -233,6 +229,8 @@
     
     [url release];
     [requestMethod release];
+    
+    [downloadCache release];
     
     [formDataRequest release];
     [requestStartTime release];
