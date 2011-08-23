@@ -225,6 +225,12 @@
 	
 }
 
+- (NSString *)description {
+    
+    return [NSString stringWithFormat:@"<DKAPIRequest: %@ %@>", self.requestMethod, self.url];
+    
+}
+
 - (void)dealloc {
     
     [url release];
