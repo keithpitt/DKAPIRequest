@@ -10,8 +10,6 @@ typedef enum {
     
     DKAPICacheStrategySession,
     
-    DKAPICacheStrategyPersisted,
-    
-    DKAPICacheStrategyCoreData
+    DKAPICacheStrategyPersisted
     
 } DKAPICacheStrategy;

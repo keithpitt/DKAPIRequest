@@ -81,12 +81,6 @@
             formDataRequest.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
             
             break;
-            
-        case DKAPICacheStrategyCoreData:
-            
-            // This is handled by DKRest...
-            
-            break;
 
     }
     
