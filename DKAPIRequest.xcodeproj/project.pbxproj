@@ -19,6 +19,9 @@
 		530D4B95140232D200A33292 /* DKAPIFormDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4B94140232D200A33292 /* DKAPIFormDataSpec.m */; };
 		530D4B97140237EE00A33292 /* OCMock-iPhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530D4B96140237EE00A33292 /* OCMock-iPhone.framework */; };
 		530D4BA314024EA200A33292 /* MockInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D4BA214024EA200A33292 /* MockInterceptor.m */; };
+		53156486140359C8009A79E5 /* DKAPIProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 53156485140359C8009A79E5 /* DKAPIProgress.m */; };
+		5315648E14036049009A79E5 /* MockProgressDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315648D14036049009A79E5 /* MockProgressDelegate.m */; };
+		53156492140360A9009A79E5 /* DKAPIProgressSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 53156491140360A9009A79E5 /* DKAPIProgressSpec.m */; };
 		537874B014010A0A00D9B746 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 537874AF14010A0A00D9B746 /* main.m */; };
 		537874BD14010A1F00D9B746 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874BC14010A1F00D9B746 /* UIKit.framework */; };
 		537874BF14010A2500D9B746 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874BE14010A2500D9B746 /* Foundation.framework */; };
@@ -87,6 +90,12 @@
 		530D4B96140237EE00A33292 /* OCMock-iPhone.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "OCMock-iPhone.framework"; path = "External/OCMock-iPhone.framework"; sourceTree = "<group>"; };
 		530D4BA114024EA200A33292 /* MockInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockInterceptor.h; sourceTree = "<group>"; };
 		530D4BA214024EA200A33292 /* MockInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockInterceptor.m; sourceTree = "<group>"; };
+		53156484140359C8009A79E5 /* DKAPIProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIProgress.h; sourceTree = "<group>"; };
+		53156485140359C8009A79E5 /* DKAPIProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIProgress.m; sourceTree = "<group>"; };
+		5315648814035D4C009A79E5 /* DKAPIProgressProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIProgressProtocol.h; sourceTree = "<group>"; };
+		5315648C14036049009A79E5 /* MockProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockProgressDelegate.h; sourceTree = "<group>"; };
+		5315648D14036049009A79E5 /* MockProgressDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockProgressDelegate.m; sourceTree = "<group>"; };
+		53156491140360A9009A79E5 /* DKAPIProgressSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKAPIProgressSpec.m; sourceTree = "<group>"; };
 		5378749F14010A0A00D9B746 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		537874AB14010A0A00D9B746 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
 		537874AF14010A0A00D9B746 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -217,12 +226,11 @@
 		530D4B6F14022FF200A33292 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5315648A14035E27009A79E5 /* DKAPIProgress */,
+				5315648914035E1E009A79E5 /* DKAPIInterceptor */,
 				530D4B7014022FF200A33292 /* DKAPICacheStrategy.h */,
 				530D4B7114022FF200A33292 /* DKAPIFormData.h */,
 				530D4B7214022FF200A33292 /* DKAPIFormData.m */,
-				530D4B7314022FF200A33292 /* DKAPIInterceptor.h */,
-				530D4B7414022FF200A33292 /* DKAPIInterceptor.m */,
-				530D4B7514022FF200A33292 /* DKAPIInterceptorProtocol.h */,
 				530D4B7614022FF200A33292 /* DKAPILogger.h */,
 				530D4B7714022FF200A33292 /* DKAPIRequest.h */,
 				530D4B7814022FF200A33292 /* DKAPIRequest.m */,
@@ -241,6 +249,35 @@
 				530D4BA214024EA200A33292 /* MockInterceptor.m */,
 			);
 			name = Interceptors;
+			sourceTree = "<group>";
+		};
+		5315648914035E1E009A79E5 /* DKAPIInterceptor */ = {
+			isa = PBXGroup;
+			children = (
+				530D4B7314022FF200A33292 /* DKAPIInterceptor.h */,
+				530D4B7414022FF200A33292 /* DKAPIInterceptor.m */,
+				530D4B7514022FF200A33292 /* DKAPIInterceptorProtocol.h */,
+			);
+			name = DKAPIInterceptor;
+			sourceTree = "<group>";
+		};
+		5315648A14035E27009A79E5 /* DKAPIProgress */ = {
+			isa = PBXGroup;
+			children = (
+				5315648814035D4C009A79E5 /* DKAPIProgressProtocol.h */,
+				53156484140359C8009A79E5 /* DKAPIProgress.h */,
+				53156485140359C8009A79E5 /* DKAPIProgress.m */,
+			);
+			name = DKAPIProgress;
+			sourceTree = "<group>";
+		};
+		5315648B14036037009A79E5 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				5315648C14036049009A79E5 /* MockProgressDelegate.h */,
+				5315648D14036049009A79E5 /* MockProgressDelegate.m */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 		5378747D140109AE00D9B746 = {
@@ -282,6 +319,7 @@
 		537874A914010A0A00D9B746 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
+				5315648B14036037009A79E5 /* Delegates */,
 				530D4BA014024E8400A33292 /* Interceptors */,
 				537874AA14010A0A00D9B746 /* Support */,
 				530D4B8B1402327F00A33292 /* DKAPIInterceptorSpec.m */,
@@ -289,6 +327,7 @@
 				530D4B94140232D200A33292 /* DKAPIFormDataSpec.m */,
 				530D4B8D1402327F00A33292 /* DKAPIResponseSpec.m */,
 				530D4B8E1402327F00A33292 /* DKAPIStubSpec.m */,
+				53156491140360A9009A79E5 /* DKAPIProgressSpec.m */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -658,6 +697,9 @@
 				530D4B931402327F00A33292 /* DKAPIStubSpec.m in Sources */,
 				530D4B95140232D200A33292 /* DKAPIFormDataSpec.m in Sources */,
 				530D4BA314024EA200A33292 /* MockInterceptor.m in Sources */,
+				53156486140359C8009A79E5 /* DKAPIProgress.m in Sources */,
+				5315648E14036049009A79E5 /* MockProgressDelegate.m in Sources */,
+				53156492140360A9009A79E5 /* DKAPIProgressSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,25 +14,26 @@
 #import "DKAPIResponse.h"
 #import "DKAPIFormData.h"
 
+#import "DKAPIProgressProtocol.h"
+#import "DKAPIProgress.h"
+
 #import "DKAPILogger.h"
 
 @implementation DKAPIRequest
 
-@synthesize finishBlock, parameters, formDataRequest;
-
-@synthesize uploadProgressDelegate, downloadProgressDelegate;
-
-@synthesize cacheStrategy;
-
-@synthesize requestStartTime;
+@synthesize url, requestMethod, finishBlock, parameters, formDataRequest, delegate, cacheStrategy, requestStartTime;
 
 - (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)params {
 
     if ((self = [super init])) {
         
-        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:requestURL];
-
-        formDataRequest.requestMethod = method;
+        // Set local properties
+        self.url = requestURL;
+        self.requestMethod = requestMethod;
+        
+        // Create the ASIFormDataRequest
+        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:self.url];
+        formDataRequest.requestMethod = self.requestMethod;
         formDataRequest.delegate = self;
         formDataRequest.timeOutSeconds = 120;
         formDataRequest.shouldAttemptPersistentConnection = NO;
@@ -145,6 +146,23 @@
         
     } else {
         
+        // Setup the progress indicator delegates (if our protocol conforms to the protocol)
+        if (delegate && [delegate conformsToProtocol:@protocol(DKAPIProgressProtocol)]) {
+            
+            // Create progress forwarders to wrap the setProgress call to more dynamic protocl as defined in
+            // the DKAPIProgressProtocol protocol
+            
+            DKAPIProgress * uploadForwarder = [[DKAPIProgress alloc] initWithDelegate:delegate progressMethod:DKAPIProgressUpload apiRequest:self];
+            DKAPIProgress * downloadForwarder = [[DKAPIProgress alloc] initWithDelegate:delegate progressMethod:DKAPIProgressDownload apiRequest:self];
+            
+            formDataRequest.downloadProgressDelegate = downloadForwarder;
+            formDataRequest.uploadProgressDelegate = uploadForwarder;
+            
+            [uploadForwarder release];
+            [downloadForwarder release];
+            
+        }
+        
         // Start the request asynchronously
         [formDataRequest startAsynchronous];
         
@@ -195,8 +213,7 @@
     [formDataRequest release];
     [requestStartTime release];
     
-    [uploadProgressDelegate release];
-    [downloadProgressDelegate release];
+    [delegate release];
     
     [super dealloc];
     

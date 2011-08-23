@@ -33,13 +33,11 @@ typedef void (^DKAPIRequestFinishBlock)(DKAPIResponse *, NSError *);
 
 @property (nonatomic, assign) DKAPICacheStrategy cacheStrategy;
 
-@property (nonatomic, retain) id uploadProgressDelegate;
+@property (nonatomic, retain) id delegate;
 
-@property (nonatomic, retain) id downloadProgressDelegate;
+@property (nonatomic, retain) NSURL * url;
 
-@property (readonly) NSURL * url;
-
-@property (readonly) NSString * requestMethod;
+@property (nonatomic, retain) NSString * requestMethod;
 
 @property (readonly) NSDate * requestStartTime;
 
