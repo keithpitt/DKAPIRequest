@@ -47,8 +47,7 @@
         self.parameters = params;
         
         // Create the ASIFormDataRequest
-        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:requestURL];
-        formDataRequest.requestMethod = self.requestMethod;
+        formDataRequest = [ASIFormDataRequest new];
         formDataRequest.delegate = self;
         formDataRequest.timeOutSeconds = 120;
         formDataRequest.shouldAttemptPersistentConnection = NO;
@@ -101,6 +100,10 @@
 }
 
 - (void)startAsynchronous {
+    
+    // Set the URL and the request method
+    formDataRequest.url = url;
+    formDataRequest.requestMethod = requestMethod;
     
     // Start the timer
     requestStartTime = [[NSDate alloc] init];
