@@ -12,7 +12,15 @@
 
 SPEC_BEGIN(DKAPIRequestSpec)
 
-describe(@"DKAPIRequestSpec", ^{
+describe(@"-(id) init", ^{
+    
+    it(@"should create a form data request", ^{
+        
+        DKAPIRequest * request = [[DKAPIRequest alloc] init];
+        
+        expect(request.formDataRequest).Not.toBeNil();
+        
+    });
     
 });
 

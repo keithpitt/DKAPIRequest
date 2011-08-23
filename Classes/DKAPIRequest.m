@@ -38,22 +38,30 @@
     
 }
 
-- (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)params {
-
+- (id)init {
+    
     if ((self = [super init])) {
         
-        // Set local properties
-        self.url = requestURL;
-        self.requestMethod = method;
-        self.parameters = params;
-        
-        // Create the ASIFormDataRequest
         formDataRequest = [ASIFormDataRequest new];
         formDataRequest.delegate = self;
         formDataRequest.timeOutSeconds = 120;
         formDataRequest.shouldAttemptPersistentConnection = NO;
         formDataRequest.showAccurateProgress = YES;
         
+        requestMethod = HTTP_GET_VERB;
+        
+    }
+    
+    return self;
+    
+}
+
+- (id)initWithURL:(NSURL *)requestURL requestMethod:(NSString *)method parameters:(NSDictionary *)params {
+
+    if ((self = [self init])) {
+        self.url = requestURL;
+        self.requestMethod = method;
+        self.parameters = params;   
     }
 
     return self;
