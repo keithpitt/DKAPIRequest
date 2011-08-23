@@ -44,7 +44,7 @@
         
         // Set local properties
         self.url = requestURL;
-        self.requestMethod = requestMethod;
+        self.requestMethod = method;
         self.parameters = params;
         
         // Create the ASIFormDataRequest
@@ -85,9 +85,9 @@
 - (void)startAsynchronous {
     
     // Set the URL and the request method
-    formDataRequest.url = url;
-    formDataRequest.requestMethod = requestMethod;
-    formDataRequest.downloadCache = downloadCache;
+    formDataRequest.url = self.url;
+    formDataRequest.requestMethod = self.requestMethod;
+    formDataRequest.downloadCache = self.downloadCache;
     
     // Start the timer
     requestStartTime = [[NSDate alloc] init];
