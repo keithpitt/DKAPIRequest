@@ -46,9 +46,6 @@ static NSMutableArray * stubs;
     // Run the stub
     DKAPIResponse * response = [stub responseWithFormDataRequest:formDataRequest];
     
-    // Release the stub
-    [stub release];
-    
     // Remove it from list
     [stubs removeObject:response];
     

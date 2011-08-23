@@ -118,7 +118,7 @@
                 errorMessage = [errorMessage stringByAppendingFormat:format, [errors objectAtIndex:i]];
             }
             
-        } else if (statusCode > 0) {
+        } else {
             
             switch (statusCode) {
                     

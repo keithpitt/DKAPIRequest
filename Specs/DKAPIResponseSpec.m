@@ -39,6 +39,8 @@ context(@"- (id)initWithHTTPRequest:(ASIHTTPRequest *)apiRequest:", ^{
         
         expect(response.headers).toEqual(headers);
         
+        [headers release];
+        
     });
     
     it(@"should set the content type", ^{
@@ -49,6 +51,8 @@ context(@"- (id)initWithHTTPRequest:(ASIHTTPRequest *)apiRequest:", ^{
         [response initWithHTTPRequest:mockedHTTPRequest apiRequest:apiRequest];
         
         expect(response.contentType).toEqual(@"http");
+        
+        [headers release];
         
     });
     
@@ -85,6 +89,8 @@ context(@"- (id)initWithHTTPRequest:(ASIHTTPRequest *)apiRequest:", ^{
         expect([response.error localizedDescription]).toEqual(@"Error 1");
         expect(response.status).toEqual(@"ok");
         expect(response.data).toEqual([NSDictionary dictionaryWithObject:@"bar" forKey:@"foo"]);
+        
+        [headers release];
         
     });
     

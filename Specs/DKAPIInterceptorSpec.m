@@ -32,6 +32,8 @@ context(@"+ (void)addInterceptor:", ^{
         
         expect([[DKAPIInterceptor interceptors] count]).toEqual(1);
         
+        [mockInterceptor release];
+        
     });
     
 });
@@ -46,6 +48,8 @@ context(@"+ (void)removeInterceptor:", ^{
         [DKAPIInterceptor removeInterceptor:mockInterceptor];
         
         expect([[DKAPIInterceptor interceptors] count]).toEqual(0);
+        
+        [mockInterceptor release];
         
     });
     

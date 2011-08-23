@@ -145,7 +145,7 @@
         if (finishBlock) finishBlock(stubbedResponse, stubbedResponse.error);
         
     } else {
-        
+                
         // Setup the progress indicator delegates (if our protocol conforms to the protocol)
         if (delegate && [delegate conformsToProtocol:@protocol(DKAPIProgressProtocol)]) {
             
@@ -162,6 +162,9 @@
             [downloadForwarder release];
             
         }
+        
+        // Retain while we do the request
+        [self retain];
         
         // Start the request asynchronously
         [formDataRequest startAsynchronous];
@@ -200,6 +203,8 @@
             if (finishBlock) finishBlock(response, response.error);
             
         }
+        
+        [response release];
         
         // Release the reference to self we made earlier
         [self release];
