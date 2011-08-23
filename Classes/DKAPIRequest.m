@@ -60,18 +60,6 @@
 
 }
 
-- (NSURL *)url {
-    
-    return formDataRequest.url;
-    
-}
-
-- (NSString *)requestMethod {
-    
-    return formDataRequest.requestMethod;
-    
-}
-
 - (void)setCacheStrategy:(DKAPICacheStrategy)strategy {
     
     cacheStrategy = strategy;
