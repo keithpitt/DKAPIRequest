@@ -20,9 +20,15 @@
 
 @synthesize statusCode, contentType, headers;
 
-+ (id)responseWithResponseDictionary:(NSDictionary *)dictionary {
++ (id)responseWithStatus:(NSString *)status data:(id)data errors:(NSArray *)errors {
     
-    return [[[self alloc] initWithResponseDictionary:dictionary] autorelease];
+    NSDictionary * responseDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         (status ? status : @"ok"), @"status",
+                                         (data ? data : [NSDictionary dictionary]), @"response",
+                                         (errors ? errors : [NSArray array]), @"errors",
+                                         nil];
+    
+    return [[[self alloc] initWithResponseDictionary:responseDictionary] autorelease];
     
 }
 
@@ -54,7 +60,7 @@
                 // Was the result from the cache?
                 NSString * didUseCache = [httpRequest didUseCachedResponse] ? @"YES" : @"NO";
             
-                DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Time:          %f seconds\nStatus Code:   %i\nContent Type:  %@\nCached:        %@\nResponse Body:\n%@",
+                DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Request:       %@ %@\nTime:          %f seconds\nStatus Code:   %i\nContent Type:  %@\nCached:        %@\nResponse Body: %@", apiRequest.requestMethod, [httpRequest.url absoluteString],
                             timePassed, statusCode, contentType, didUseCache, response);
             
             #endif

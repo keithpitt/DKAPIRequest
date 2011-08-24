@@ -9,6 +9,7 @@
 #import "DKAPIStub.h"
 
 #import "DKAPIRequest.h"
+#import "DKAPILogger.h"
 
 @implementation DKAPIStub
 
@@ -47,6 +48,15 @@ static NSMutableArray * stubs;
     
     // Run the stub
     DKAPIResponse * response = [stub responseWithAPIRequest:apiRequest];
+    
+    // Only perform the following checks if we're debugging...
+#ifdef DEBUG
+    
+    NSString * errorsString = [response.errors count] > 0 ? [response.errors description] : @"n/a";
+    
+    DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Stubbed:       YES\nStatus:        %@\nErrors:        %@\nResponse Body: %@", response.status, errorsString, response.data);
+    
+#endif
     
     // Remove it from list
     [stubs removeObject:response];

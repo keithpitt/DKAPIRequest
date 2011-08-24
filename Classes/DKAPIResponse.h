@@ -26,7 +26,7 @@
 
 @property (nonatomic, assign) NSError * error;
 
-+ (id)responseWithResponseDictionary:(NSDictionary *)dictionary;
++ (id)responseWithStatus:(NSString *)status data:(id)data errors:(NSArray *)errors;
 
 - (id)initWithHTTPRequest:(ASIHTTPRequest *)httpRequest apiRequest:(DKAPIRequest *)apiRequest;
 

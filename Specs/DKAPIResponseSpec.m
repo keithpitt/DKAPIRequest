@@ -27,6 +27,8 @@ context(@"- (id)initWithHTTPRequest:(ASIHTTPRequest *)apiRequest:", ^{
         apiRequest = [DKAPIRequest new];
         
         mockedHTTPRequest = [OCMockObject niceMockForClass:[ASIHTTPRequest class]];
+        [[[mockedHTTPRequest stub] andReturn:[NSURL URLWithString:@"http://www.mockedhttprequest.com"]] url];
+        
         
     });
     

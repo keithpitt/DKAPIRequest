@@ -26,13 +26,9 @@ context(@"+ (DKAPIStub *)stubWithBlock:", ^{
             expect([apiRequest.url absoluteString]).toEqual(@"http://www.google.com");
             expect([apiRequest.formDataRequest.url absoluteString]).toEqual(@"http://www.google.com?people=crab");
             
-            NSDictionary * dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSArray array], @"errors",
-                                         [NSDictionary dictionaryWithObject:@"foo" forKey:@"bar"], @"response",
-                                         @"ok", @"status",
-                                         nil];
-            
-            return [DKAPIResponse responseWithResponseDictionary:dictionary];
+            return [DKAPIResponse responseWithStatus:@"ok"
+                                                data:[NSDictionary dictionaryWithObject:@"foo" forKey:@"bar"]
+                                              errors:nil];
             
         }];
 
