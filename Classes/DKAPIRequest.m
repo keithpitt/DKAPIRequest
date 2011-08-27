@@ -42,7 +42,7 @@
     
     if ((self = [super init])) {
         
-        formDataRequest = [ASIFormDataRequest new];
+        formDataRequest = [[ASIFormDataRequest alloc] initWithURL:nil];
         formDataRequest.delegate = self;
         formDataRequest.timeOutSeconds = 120;
         formDataRequest.shouldAttemptPersistentConnection = NO;
