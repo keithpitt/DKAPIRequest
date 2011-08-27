@@ -207,9 +207,19 @@ context(@"- (NSError *)error", ^{
         
     });
     
-    it(@"should return nil if there are no errors", ^{
+    it(@"should return nil if the status code is (200 OK)", ^{
+        
+        response.statusCode = 200;
         
         expect(response.error).toBeNil();
+        
+    });
+    
+    it(@"should return an error if the status code is (304 not modified)", ^{
+       
+        response.statusCode = 304;
+        
+        expect([response.error localizedDescription]).toEqual(@"An unknown error occured (304)");
         
     });
     

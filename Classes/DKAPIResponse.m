@@ -122,7 +122,7 @@
 
 - (NSError *)error {
     
-    if (!error && ([errors count] > 0 || statusCode > 0)) {
+    if (!error && ([errors count] > 0 || (statusCode >= 300))) {
         
         // Default error message
         NSString * errorMessage;
