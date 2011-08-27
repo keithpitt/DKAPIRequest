@@ -172,6 +172,7 @@ context(@"- (NSError *)error", ^{
     beforeEach(^{
         
         response = [DKAPIResponse new];
+        response.success = YES;
         
     });
     

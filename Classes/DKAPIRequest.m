@@ -150,7 +150,11 @@
     if (stubbedResponse) {
                 
         // Run the finish block right away if we have one
-        if (finishBlock) finishBlock(stubbedResponse, stubbedResponse.error);
+        if (finishBlock) 
+            if (stubbedResponse.error)
+                finishBlock(nil, stubbedResponse.error);
+            else
+                finishBlock(stubbedResponse, nil);
         
     } else {
                 
@@ -208,7 +212,12 @@
         if ([DKAPIInterceptor performDelegation:@selector(interceptedAPIRequest:handleAPIResponse:) withObject:self withObject:response]) {
             
             // Finish by calling our block
-            if (finishBlock) finishBlock(response, response.error);
+            // Only pass in the response if there are no errors
+            if (finishBlock)
+                if (response.error)
+                    finishBlock(nil, response.error);
+                else
+                    finishBlock(response, nil);
             
         }
         
