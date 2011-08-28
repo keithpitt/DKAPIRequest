@@ -124,6 +124,11 @@
             // If this is a GET request, add the parameters to the current URL
             formDataRequest.url = [formData urlWithPostData:self.url];
             
+            // Debugging information
+            #ifdef DEBUG        
+                DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n", formDataRequest.requestMethod, [formDataRequest.url absoluteURL]);
+            #endif
+            
         } else {
             
             // Add any files found in the serialized results
@@ -134,21 +139,39 @@
             for (NSDictionary * param in formData.post)
                 [formDataRequest setPostValue:[param objectForKey:@"value"] forKey:[param objectForKey:@"key"]];
             
+            // Debugging information
+            #ifdef DEBUG
+            
+                NSString * debuggableBody = @"";
+                for (NSDictionary * param in formData.post)
+                    debuggableBody = [debuggableBody stringByAppendingFormat:@"    %@ = %@\n", [param objectForKey:@"key"], [param objectForKey:@"value"]];
+            
+                if ([formData.files count] > 0) {
+                    
+                    NSString * debuggableFiles = @"";
+                    for (NSDictionary * param in formData.files)
+                        debuggableFiles = [debuggableFiles stringByAppendingFormat:@"    %@ = %@\n", [param objectForKey:@"key"], [param objectForKey:@"value"]];
+                    
+                    DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\nBody: (\n%@)\nFiles: (\n%@)", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], debuggableBody, debuggableFiles);
+                    
+                } else
+                    
+                    DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\nBody: (\n%@)", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], debuggableBody);
+            
+            #endif
+            
         }
         
         [formData release];
         
-    }
-    
-    // Some debuggiong information
-    #ifdef DEBUG
+    } else {
         
-        if(self.parameters && formDataRequest.requestMethod != HTTP_GET_VERB)
-            DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n%@\n", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], self.parameters);
-        else
+        // Debugging information
+        #ifdef DEBUG
             DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\n", formDataRequest.requestMethod, [formDataRequest.url absoluteURL]);
+        #endif
         
-    #endif
+    }
     
     // Try and stub the response
     DKAPIResponse * stubbedResponse = [DKAPIStub performWithAPIRequest:self];
