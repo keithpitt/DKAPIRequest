@@ -63,16 +63,16 @@
     // be a file, or the data should be represented differently. For example, if you have an NSObject
     // which comforms to the protocol. When sending this object through the parameters, you may want
     // to use a property (such as an ID) for the post data.
+    
+    // We don't actually check to see if the part responds to the DKAPIFormDataProtocol because if we do,
+    // that means what ever we're checking must have included DKAPIFormDataProtocol. In the case of DKFile,
+    // it doesn't require the DKAPIRequest lib.
 
-    if ([part conformsToProtocol:@protocol(DKAPIFormDataProtocol)]) {
+    if ([part respondsToSelector:@selector(formData:dataTypeForKey:)])
+        dataType = [part formData:self dataTypeForKey:parentKey];
 
-        if ([part respondsToSelector:@selector(formData:dataTypeForKey:)])
-            dataType = [part formData:self dataTypeForKey:parentKey];
-
-        if ([part respondsToSelector:@selector(formData:valueForKey:)])
-            value = [part formData:self valueForKey:parentKey];
-
-    }
+    if ([part respondsToSelector:@selector(formData:valueForKey:)])
+        value = [part formData:self valueForKey:parentKey];
     
     // The data object
     NSDictionary * object = [NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", value, @"value", nil];
