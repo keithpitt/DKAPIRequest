@@ -144,19 +144,14 @@
             
                 NSString * debuggableBody = @"";
                 for (NSDictionary * param in formData.post)
-                    debuggableBody = [debuggableBody stringByAppendingFormat:@"    %@ = %@\n", [param objectForKey:@"key"], [param objectForKey:@"value"]];
+                    debuggableBody = [debuggableBody stringByAppendingFormat:@"    %@ = %@\n",
+                                      [param objectForKey:@"key"], [param objectForKey:@"value"]];
             
-                if ([formData.files count] > 0) {
+                for (NSDictionary * param in formData.files)
+                    debuggableBody = [debuggableBody stringByAppendingFormat:@"    %@ = [FILE] %@\n",
+                                      [param objectForKey:@"key"], [param objectForKey:@"value"]];
                     
-                    NSString * debuggableFiles = @"";
-                    for (NSDictionary * param in formData.files)
-                        debuggableFiles = [debuggableFiles stringByAppendingFormat:@"    %@ = %@\n", [param objectForKey:@"key"], [param objectForKey:@"value"]];
-                    
-                    DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\nBody: (\n%@)\nFiles: (\n%@)", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], debuggableBody, debuggableFiles);
-                    
-                } else
-                    
-                    DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\nBody: (\n%@)", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], debuggableBody);
+                DKAPIRequestLog(DKAPIRequestLogDEBUG, @"%@ %@\nBody: (\n%@)", formDataRequest.requestMethod, [formDataRequest.url absoluteURL], debuggableBody);
             
             #endif
             
