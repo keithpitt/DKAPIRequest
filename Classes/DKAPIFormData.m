@@ -8,8 +8,6 @@
 
 #import "DKAPIFormData.h"
 
-#import "DKFile.h"
-
 @implementation DKAPIFormData
 
 @synthesize post, files;
@@ -53,20 +51,37 @@
         
     }
     
-    // If we have gotten this far, that means the part is not an NSArray or NSDictionary,
-    // so lets just add it as raw data.
+    // If we have gotten this far, that means the part is not an NSArray or NSDictionary.
     
-    if ([part isKindOfClass:[DKFile class]]) {
-        
-        DKFile * fileUpload = (DKFile *)part;
-        
-        [self.files addObject:[NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", fileUpload.path, @"value", nil]];
-        
-    } else {
-        
-        [self.post addObject:[NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", part, @"value", nil]];
-        
+    // Default data type
+    DKAPIFormDataType dataType = DKAPIFormDataTypeNormal;
+    
+    // Default value
+    id value = part;
+    
+    // If part conforms to the DKAPIFormDataProtocol, it means its something funky. It could
+    // be a file, or the data should be represented differently. For example, if you have an NSObject
+    // which comforms to the protocol. When sending this object through the parameters, you may want
+    // to use a property (such as an ID) for the post data.
+
+    if ([part conformsToProtocol:@protocol(DKAPIFormDataProtocol)]) {
+
+        if ([part respondsToSelector:@selector(formData:dataTypeForKey:)])
+            dataType = [part formData:self dataTypeForKey:parentKey];
+
+        if ([part respondsToSelector:@selector(formData:valueForKey:)])
+            value = [part formData:self valueForKey:parentKey];
+
     }
+    
+    // The data object
+    NSDictionary * object = [NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", value, @"value", nil];
+    
+    // Add the data to the params depending on the type
+    if (dataType == DKAPIFormDataTypeFile)
+        [self.files addObject:object];
+    else
+        [self.post addObject:object];
     
     return;
     

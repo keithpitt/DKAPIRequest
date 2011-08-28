@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DKAPIFormDataProtocol.h"
+
 @interface DKAPIFormData : NSObject
 
 @property (nonatomic, retain) NSMutableArray * post;

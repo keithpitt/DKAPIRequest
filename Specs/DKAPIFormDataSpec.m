@@ -9,7 +9,7 @@
 #import "SpecHelper.h"
 
 #import "DKAPIFormData.h"
-#import "DKFile.h"
+#import "MockFileUpload.h"
 
 SPEC_BEGIN(DKAPIFormDataSpec)
 
@@ -21,8 +21,8 @@ context(@"- (id)initWithDictionary:", ^{
                                   [NSDictionary dictionaryWithObjectsAndKeys:@"Keith Pitt", @"name", @"me@keithpitt.com", @"email", nil], @"author",
                                   [NSNumber numberWithInt:12], @"commentCount", 
                                   [NSArray arrayWithObjects:@"First", @"Second", @"Third", nil], @"comments",
-                                  [DKFile fileFromDocuments:@"Something1.txt"], @"some_file",
-                                  [DKFile fileFromDocuments:@"Something2.txt"], @"some_other_file",
+                                  [MockFileUpload fileUploadWithPath:@"Something1.txt"], @"some_file",
+                                  [MockFileUpload fileUploadWithPath:@"Something2.txt"], @"some_other_file",
                                   nil], @"post",
                                  nil];
     
@@ -70,12 +70,12 @@ context(@"- (id)initWithDictionary:", ^{
     it(@"should filter out files into a seperate array", ^{
         
         NSDictionary * result1 = [NSDictionary dictionaryWithObjectsAndKeys:@"post[some_file]", @"key",
-                                  [[DKFile fileFromDocuments:@"Something1.txt"] path], @"value",
+                                  [[MockFileUpload fileUploadWithPath:@"Something1.txt"] path], @"value",
                                   nil];
         expect([formData.files objectAtIndex:0]).toEqual(result1);
         
         NSDictionary * result2 = [NSDictionary dictionaryWithObjectsAndKeys:@"post[some_other_file]", @"key",
-                                  [[DKFile fileFromDocuments:@"Something2.txt"] path], @"value",
+                                  [[MockFileUpload fileUploadWithPath:@"Something2.txt"] path], @"value",
                                   nil];
         expect([formData.files objectAtIndex:1]).toEqual(result2);
         

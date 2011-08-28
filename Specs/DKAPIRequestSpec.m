@@ -21,6 +21,8 @@ describe(@"-(id) init", ^{
         
         expect(request.formDataRequest).Not.toBeNil();
         
+        [request release];
+        
     });
     
 });
@@ -49,6 +51,8 @@ describe(@"- (void)startAsynchronous", ^{
         
         [request startAsynchronous];
         
+        [request release];
+        
         while(completed == NO) {
             [NSThread sleepForTimeInterval:0.1];
         }
@@ -76,6 +80,8 @@ describe(@"- (void)startAsynchronous", ^{
         };    
         
         [request startAsynchronous];
+        
+        [request release];
         
         while(completed == NO) {
             [NSThread sleepForTimeInterval:0.1];
