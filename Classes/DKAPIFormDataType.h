@@ -8,8 +8,8 @@
 
 typedef enum {
     
-    DKAPIFormDataTypeNormal,
+    DKAPIFormDataTypeNormal = 1,
     
-    DKAPIFormDataTypeFile
+    DKAPIFormDataTypeFile = 2
     
 } DKAPIFormDataType;

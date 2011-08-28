@@ -10,6 +10,7 @@
 
 #import "DKAPIFormData.h"
 #import "MockFileUpload.h"
+#import "DKFile.h"
 
 SPEC_BEGIN(DKAPIFormDataSpec)
 
@@ -22,7 +23,7 @@ context(@"- (id)initWithDictionary:", ^{
                                   [NSNumber numberWithInt:12], @"commentCount", 
                                   [NSArray arrayWithObjects:@"First", @"Second", @"Third", nil], @"comments",
                                   [MockFileUpload fileUploadWithPath:@"Something1.txt"], @"some_file",
-                                  [MockFileUpload fileUploadWithPath:@"Something2.txt"], @"some_other_file",
+                                  [DKFile fileFromDocuments:@"Something2.txt"], @"some_other_file",
                                   nil], @"post",
                                  nil];
     
@@ -75,7 +76,7 @@ context(@"- (id)initWithDictionary:", ^{
         expect([formData.files objectAtIndex:0]).toEqual(result1);
         
         NSDictionary * result2 = [NSDictionary dictionaryWithObjectsAndKeys:@"post[some_other_file]", @"key",
-                                  [[MockFileUpload fileUploadWithPath:@"Something2.txt"] path], @"value",
+                                  [[DKFile fileFromDocuments:@"Something2.txt"] path], @"value",
                                   nil];
         expect([formData.files objectAtIndex:1]).toEqual(result2);
         

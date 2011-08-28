@@ -78,9 +78,9 @@
     NSDictionary * object = [NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", value, @"value", nil];
     
     // Add the data to the params depending on the type
-    if (dataType == DKAPIFormDataTypeFile)
+    if (dataType == DKAPIFormDataTypeFile) {
         [self.files addObject:object];
-    else
+    } else
         [self.post addObject:object];
     
     return;
