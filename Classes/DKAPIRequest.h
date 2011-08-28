@@ -27,6 +27,8 @@ typedef void (^DKAPIRequestFinishBlock)(DKAPIResponse *, NSError *);
     
     ASIFormDataRequest * formDataRequest;
     
+    dispatch_queue_t currentDispatchQueue;
+    
 }
 
 @property (nonatomic, retain) NSDictionary * parameters;

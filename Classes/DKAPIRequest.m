@@ -92,6 +92,10 @@
 
 - (void)startAsynchronous {
     
+    // Store the thread we are calling this one, so we can call our finishBlock on the
+    // same thread.
+    currentDispatchQueue = dispatch_get_current_queue();
+    
     // Set the URL and the request method
     formDataRequest.url = self.url;
     formDataRequest.requestMethod = self.requestMethod;
@@ -150,11 +154,13 @@
     if (stubbedResponse) {
                 
         // Run the finish block right away if we have one
-        if (finishBlock) 
-            if (stubbedResponse.error)
-                finishBlock(nil, stubbedResponse.error);
-            else
-                finishBlock(stubbedResponse, nil);
+        if (finishBlock)
+            dispatch_async(currentDispatchQueue, ^{
+                if (stubbedResponse.error)
+                    finishBlock(nil, stubbedResponse.error);
+                else
+                    finishBlock(stubbedResponse, nil);
+            });
         
     } else {
                 
@@ -190,7 +196,9 @@
     DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Connection Failed: %@", request.error);
     
     if (finishBlock)
-        finishBlock(nil, request.error);
+        dispatch_async(currentDispatchQueue, ^{
+            finishBlock(nil, request.error);
+        });
     
     // Release the reference to self we made earlier
     [self release];
@@ -214,10 +222,12 @@
             // Finish by calling our block
             // Only pass in the response if there are no errors
             if (finishBlock)
-                if (response.error)
-                    finishBlock(nil, response.error);
-                else
-                    finishBlock(response, nil);
+                dispatch_async(currentDispatchQueue, ^{
+                    if (response.error)
+                        finishBlock(nil, response.error);
+                    else
+                        finishBlock(response, nil);
+                });
             
         }
         
@@ -237,6 +247,8 @@
 }
 
 - (void)dealloc {
+    
+    currentDispatchQueue = nil;
     
     [url release];
     [requestMethod release];
