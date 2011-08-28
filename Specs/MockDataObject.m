@@ -29,15 +29,10 @@
 
 - (NSString *)formData:(DKAPIFormData *)formData parameterForKey:(NSString *)key {
 
-    if ([key hasSuffix:@"]"]) {
-        
-        return [key stringByReplacingCharactersInRange:NSMakeRange([key length] - 1, 1) withString:@"_id]"];
-        
-    } else {
-        
+    if ([key hasSuffix:@"]"])
+        return [key stringByReplacingCharactersInRange:NSMakeRange([key length] - 1, 1) withString:@"_id]"];    
+    else
         return [key stringByAppendingString:@"_id"];
-        
-    }
 
 }
 
