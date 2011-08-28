@@ -16,7 +16,9 @@
 
 @optional
 
-- (DKAPIFormDataType)formData:(DKAPIFormData *)formData dataTypeForKey:(NSString *)key;
-- (id)formData:(DKAPIFormData *)formData valueForKey:(NSString *)key;
+- (DKAPIFormDataType)formData:(DKAPIFormData *)formData dataTypeForParameter:(NSString *)param;
+
+- (NSString *)formData:(DKAPIFormData *)formData parameterForKey:(NSString *)key;
+- (id)formData:(DKAPIFormData *)formData valueForParameter:(NSString *)param;
 
 @end

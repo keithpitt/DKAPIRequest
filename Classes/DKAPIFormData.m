@@ -59,6 +59,9 @@
     // Default value
     id value = part;
     
+    // Default key
+    NSString * paramKey = parentKey;
+    
     // If part conforms to the DKAPIFormDataProtocol, it means its something funky. It could
     // be a file, or the data should be represented differently. For example, if you have an NSObject
     // which comforms to the protocol. When sending this object through the parameters, you may want
@@ -68,14 +71,17 @@
     // that means what ever we're checking must have included DKAPIFormDataProtocol. In the case of DKFile,
     // it doesn't require the DKAPIRequest lib.
 
-    if ([part respondsToSelector:@selector(formData:dataTypeForKey:)])
-        dataType = [part formData:self dataTypeForKey:parentKey];
+    if ([part respondsToSelector:@selector(formData:dataTypeForParameter:)])
+        dataType = [part formData:self dataTypeForParameter:parentKey];
 
-    if ([part respondsToSelector:@selector(formData:valueForKey:)])
-        value = [part formData:self valueForKey:parentKey];
+    if ([part respondsToSelector:@selector(formData:valueForParameter:)])
+        value = [part formData:self valueForParameter:parentKey];
+    
+    if ([part respondsToSelector:@selector(formData:parameterForKey:)])
+        paramKey = [part formData:self parameterForKey:parentKey];
     
     // The data object
-    NSDictionary * object = [NSDictionary dictionaryWithObjectsAndKeys:parentKey, @"key", value, @"value", nil];
+    NSDictionary * object = [NSDictionary dictionaryWithObjectsAndKeys:paramKey, @"key", value, @"value", nil];
     
     // Add the data to the params depending on the type
     if (dataType == DKAPIFormDataTypeFile) {

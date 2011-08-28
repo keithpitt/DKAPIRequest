@@ -21,13 +21,13 @@
     
 }
 
-- (id)formData:(DKAPIFormData *)formData valueForKey:(NSString *)key {
+- (id)formData:(DKAPIFormData *)formData valueForParameter:(NSString *)param {
     
     return self.path;
     
 }
 
-- (DKAPIFormDataType)formData:(DKAPIFormData *)formData dataTypeForKey:(NSString *)key {
+- (DKAPIFormDataType)formData:(DKAPIFormData *)formData dataTypeForParameter:(NSString *)param {
     
     return DKAPIFormDataTypeFile;
     

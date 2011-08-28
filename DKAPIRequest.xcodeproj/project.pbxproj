@@ -28,6 +28,7 @@
 		537874D514010A5700D9B746 /* Cedar-iPhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874C114010A5700D9B746 /* Cedar-iPhone.framework */; };
 		537874D614010A5700D9B746 /* libExpecta-ios-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874D214010A5700D9B746 /* libExpecta-ios-universal.a */; };
 		53876B98140A1BDA009F8171 /* MockFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 53876B97140A1BDA009F8171 /* MockFileUpload.m */; };
+		53876BEA140A265A009F8171 /* MockDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 53876BE9140A265A009F8171 /* MockDataObject.m */; };
 		53F18BB01401532800E1A6E8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F18BAF1401532800E1A6E8 /* SystemConfiguration.framework */; };
 		53F18BB31401533100E1A6E8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F18BB21401533100E1A6E8 /* CFNetwork.framework */; };
 		53F18BB51401538800E1A6E8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F18BB41401538800E1A6E8 /* libz.dylib */; };
@@ -124,8 +125,10 @@
 		537874D414010A5700D9B746 /* NSValue+Expecta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+Expecta.h"; sourceTree = "<group>"; };
 		53876B93140A18F8009F8171 /* DKAPIFormDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIFormDataProtocol.h; sourceTree = "<group>"; };
 		53876B94140A19A6009F8171 /* DKAPIFormDataType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKAPIFormDataType.h; sourceTree = "<group>"; };
-		53876B96140A1BDA009F8171 /* MockFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; path = MockFileUpload.h; sourceTree = "<group>"; };
+		53876B96140A1BDA009F8171 /* MockFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockFileUpload.h; sourceTree = "<group>"; };
 		53876B97140A1BDA009F8171 /* MockFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockFileUpload.m; sourceTree = "<group>"; };
+		53876BE8140A265A009F8171 /* MockDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockDataObject.h; sourceTree = "<group>"; };
+		53876BE9140A265A009F8171 /* MockDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockDataObject.m; sourceTree = "<group>"; };
 		53F18BAF1401532800E1A6E8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		53F18BB21401533100E1A6E8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		53F18BB41401538800E1A6E8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
@@ -405,6 +408,8 @@
 			children = (
 				53876B96140A1BDA009F8171 /* MockFileUpload.h */,
 				53876B97140A1BDA009F8171 /* MockFileUpload.m */,
+				53876BE8140A265A009F8171 /* MockDataObject.h */,
+				53876BE9140A265A009F8171 /* MockDataObject.m */,
 			);
 			name = "Custom Form Data";
 			sourceTree = "<group>";
@@ -726,6 +731,7 @@
 				5315648E14036049009A79E5 /* MockProgressDelegate.m in Sources */,
 				53156492140360A9009A79E5 /* DKAPIProgressSpec.m in Sources */,
 				53876B98140A1BDA009F8171 /* MockFileUpload.m in Sources */,
+				53876BEA140A265A009F8171 /* MockDataObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

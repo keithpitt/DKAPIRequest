@@ -10,6 +10,7 @@
 
 #import "DKAPIFormData.h"
 #import "MockFileUpload.h"
+#import "MockDataObject.h"
 #import "DKFile.h"
 
 SPEC_BEGIN(DKAPIFormDataSpec)
@@ -79,6 +80,32 @@ context(@"- (id)initWithDictionary:", ^{
                                   [[DKFile fileFromDocuments:@"Something2.txt"] path], @"value",
                                   nil];
         expect([formData.files objectAtIndex:1]).toEqual(result2);
+        
+    });
+    
+    it(@"should handle objects that have implemented the formData:parameterForKey:andValue method", ^{
+        
+        MockDataObject * object = [MockDataObject dataObjectWithIdentifier:[NSNumber numberWithInt:12]];
+        
+        DKAPIFormData * formDataWithObject = [[DKAPIFormData alloc] initWithDictionary:
+                                              [NSDictionary dictionaryWithObjectsAndKeys:
+                                               object, @"something",
+                                               [NSDictionary dictionaryWithObject:object forKey:@"thing"], @"another",
+                                               nil]
+                                              ];
+        
+        NSDictionary * result0 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  @"something_id", @"key", 
+                                  [NSNumber numberWithInt:12], @"value",
+                                  nil];
+        
+        NSDictionary * result1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  @"another[thing_id]", @"key", 
+                                  [NSNumber numberWithInt:12], @"value",
+                                  nil];
+        
+        expect([formDataWithObject.post objectAtIndex:0]).toEqual(result0);
+        expect([formDataWithObject.post objectAtIndex:1]).toEqual(result1);
         
     });
     
