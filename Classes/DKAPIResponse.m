@@ -174,6 +174,15 @@
     
 }
 
+- (NSString *)description {
+    
+    if (self.error)    
+        return [NSString stringWithFormat:@"<DKAPIResponse: Status: %@ Error: %@>", self.status, [self.error localizedDescription]];
+    else
+        return [NSString stringWithFormat:@"<DKAPIResponse: Status: %@ Data: %@>", self.status, self.data];
+    
+}
+
 - (void)dealloc {
     
     [contentType release];
