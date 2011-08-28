@@ -221,16 +221,27 @@
             
             // Finish by calling our block
             // Only pass in the response if there are no errors
-            if (finishBlock)
+            if (finishBlock) {
+                
+                // Retain the response for use in the thread
+                [response retain];
+                
+                // Run the finish block in a background therad
                 dispatch_async(currentDispatchQueue, ^{
                     if (response.error)
                         finishBlock(nil, response.error);
                     else
                         finishBlock(response, nil);
+                    
+                    // Release the response
+                    [response release];
                 });
+                
+            }
             
         }
         
+        // Release the response
         [response release];
         
         // Release the reference to self we made earlier
