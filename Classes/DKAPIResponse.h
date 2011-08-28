@@ -16,12 +16,12 @@
 @interface DKAPIResponse : NSObject
 
 @property (nonatomic, assign) NSInteger statusCode;
-@property (nonatomic, assign) NSString * contentType;
-@property (nonatomic, assign) NSDictionary * headers;
+@property (nonatomic, copy) NSString * contentType;
+@property (nonatomic, copy) NSDictionary * headers;
 
-@property (nonatomic, assign) NSString * status;
-@property (nonatomic, assign) id data;
-@property (nonatomic, assign) NSArray * errors;
+@property (nonatomic, copy) NSString * status;
+@property (nonatomic, copy) id data;
+@property (nonatomic, copy) NSArray * errors;
 @property (nonatomic) bool success;
 
 @property (nonatomic, assign) NSError * error;

@@ -36,6 +36,9 @@
     // Kick off the request
     [apiRequest startAsynchronous];
     
+    // Release the request
+    [apiRequest release];
+    
 }
 
 - (id)init {
@@ -152,15 +155,16 @@
     
     // Should we use a stubbing?
     if (stubbedResponse) {
-                
+        
+        // Reset the request timer
+        [requestStartTime release], requestStartTime = nil;
+
         // Run the finish block right away if we have one
         if (finishBlock)
-            dispatch_async(currentDispatchQueue, ^{
-                if (stubbedResponse.error)
-                    finishBlock(nil, stubbedResponse.error);
-                else
-                    finishBlock(stubbedResponse, nil);
-            });
+            if (stubbedResponse.error)
+                finishBlock(nil, stubbedResponse.error);
+            else
+                finishBlock(stubbedResponse, nil);
         
     } else {
                 
@@ -195,10 +199,25 @@
     
     DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Connection Failed: %@", request.error);
     
-    if (finishBlock)
+    if (finishBlock) {
+        
+        // Retain the request for the thread
+        [self retain];
+        
         dispatch_async(currentDispatchQueue, ^{
+            
+            // Call the finish block with the error
             finishBlock(nil, request.error);
+            
+            // Set the request timer back to nil
+            [requestStartTime release], requestStartTime = nil;
+            
+            // Release the request
+            [self release];
+            
         });
+        
+    }
     
     // Release the reference to self we made earlier
     [self release];
@@ -223,7 +242,8 @@
             // Only pass in the response if there are no errors
             if (finishBlock) {
                 
-                // Retain the response for use in the thread
+                // Retain the response and the request for use in the thread
+                [self retain];
                 [response retain];
                 
                 // Run the finish block in a background therad
@@ -233,7 +253,8 @@
                     else
                         finishBlock(response, nil);
                     
-                    // Release the response
+                    // Release the response and the request
+                    [self release];
                     [response release];
                 });
                 
@@ -244,10 +265,13 @@
         // Release the response
         [response release];
         
+        // Set the request timer back to nil
+        [requestStartTime release], requestStartTime = nil;
+        
         // Release the reference to self we made earlier
         [self release];
         
-    });    
+    });
 	
 }
 
@@ -259,14 +283,27 @@
 
 - (void)dealloc {
     
+    #ifdef DEBUG
+        
+        // If we have a request time - then we have released while a request was running..
+        if (requestStartTime) {
+            DKAPIRequestLog(DKAPIRequestLogDEBUG, @"Request: %@ %@\nInformation: The request was not finished as the DKAPIRequest object was deallocated during the request. This may be a bug in DKAPIRequest and it should be reported.",
+                            formDataRequest.requestMethod,
+                            [formDataRequest.url absoluteURL]);
+        }
+        
+    #endif
+    
     currentDispatchQueue = nil;
+    
+    [formDataRequest clearDelegatesAndCancel];
+    [formDataRequest release];
     
     [url release];
     [requestMethod release];
     
     [downloadCache release];
     
-    [formDataRequest release];
     [requestStartTime release];
     
     [delegate release];

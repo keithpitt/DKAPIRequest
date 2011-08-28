@@ -166,11 +166,24 @@
                                    nil];
         
         // Create an instance of NSError
-        error = [NSError errorWithDomain:@"DKAPIRequest" code:0 userInfo:userInfo];
+        error = [[NSError alloc] initWithDomain:@"DKAPIRequest" code:0 userInfo:userInfo];
         
     }
     
     return error;
+    
+}
+
+- (void)dealloc {
+    
+    [contentType release];
+    [headers release];
+    
+    [status release];
+    [data release];
+    [errors release];
+    
+    [super dealloc];
     
 }
 
