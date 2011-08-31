@@ -29,7 +29,6 @@ context(@"- (id)initWithHTTPRequest:(ASIHTTPRequest *)apiRequest:", ^{
         mockedHTTPRequest = [OCMockObject niceMockForClass:[ASIHTTPRequest class]];
         [[[mockedHTTPRequest stub] andReturn:[NSURL URLWithString:@"http://www.mockedhttprequest.com"]] url];
         
-        
     });
     
     it(@"should set the headers" , ^{
@@ -82,17 +81,38 @@ context(@"- (id)initWithHTTPRequest:(ASIHTTPRequest *)apiRequest:", ^{
         [[[mockedHTTPRequest stub] andReturn:headers] responseHeaders];
         
         // Stub response string
-        NSString * responseString = @"{ \"response\": { \"foo\": \"bar\" } \"status\": \"ok\" \"errors\": [ \"Error 1\" ] }";
+        NSString * responseString = @"{ \"response\": { \"foo\": \"bar\" }, \"status\": \"ok\", \"errors\": [ ] }";
         [[[mockedHTTPRequest stub] andReturn:responseString] responseString];
         
         [response initWithHTTPRequest:mockedHTTPRequest apiRequest:apiRequest];
         
         expect(response.success).toBeTruthy();
-        expect([response.error localizedDescription]).toEqual(@"Error 1");
         expect(response.status).toEqual(@"ok");
         expect(response.data).toEqual([NSDictionary dictionaryWithObject:@"bar" forKey:@"foo"]);
         
         [headers release];
+        
+    });
+    
+    it(@"should return an error if the JSON is invalid", ^{
+        
+        int statusCode = 200;
+        
+        // Stub status code
+        [[[mockedHTTPRequest stub] andReturnValue:OCMOCK_VALUE(statusCode)] responseStatusCode];
+        
+        // Stub headers
+        NSMutableDictionary * headers = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"json", @"Content-Type", nil];
+        [[[mockedHTTPRequest stub] andReturn:headers] responseHeaders];
+        
+        // Stub response string
+        NSString * responseString = @"{ \"response";
+        [[[mockedHTTPRequest stub] andReturn:responseString] responseString];
+        
+        [response initWithHTTPRequest:mockedHTTPRequest apiRequest:apiRequest];
+        
+        expect(response.success).toBeFalsy();
+        expect([response.error localizedDescription]).toEqual(@"Invalid string.");
         
     });
     

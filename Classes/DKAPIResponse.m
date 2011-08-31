@@ -12,7 +12,7 @@
 #import "DKAPIRequest.h"
 
 #import "ASIHTTPRequest.h"
-#import "JSON.h"
+#import "JSONKit.h"
 
 @implementation DKAPIResponse
 
@@ -73,14 +73,30 @@
             // Did we get a json-like response?
             if ([contentType rangeOfString:@"json"].location != NSNotFound) {
                 
+                NSError * jsonParsingError = nil;
+                
                 // Parse the JSON content
-                NSDictionary * json = [responseString JSONValue];
+                NSDictionary * json = [responseString objectFromJSONStringWithParseOptions:JKParseOptionNone error:&jsonParsingError];
                 
-                // Set the response object
-                [self setResponseDictionary:json];
+                // If there was an error pasing the JSON
+                if (jsonParsingError) {
+                    
+                    // Copy the error
+                    error = [jsonParsingError copy];
+                    success = NO;
+                    
+                    // Log the response
+                    log(responseString);
+                    
+                } else {
                 
-                // Log the response
-                log(json);
+                    // Set the response object
+                    [self setResponseDictionary:json];
+                    
+                    // Log the response
+                    log(json);
+                    
+                }
                 
             } else {
                 

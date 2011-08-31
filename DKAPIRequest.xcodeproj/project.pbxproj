@@ -29,6 +29,7 @@
 		537874D614010A5700D9B746 /* libExpecta-ios-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 537874D214010A5700D9B746 /* libExpecta-ios-universal.a */; };
 		53876B98140A1BDA009F8171 /* MockFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 53876B97140A1BDA009F8171 /* MockFileUpload.m */; };
 		53876BEA140A265A009F8171 /* MockDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 53876BE9140A265A009F8171 /* MockDataObject.m */; };
+		53B2F5B9140E0232003A5CA2 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B2F5B8140E0232003A5CA2 /* JSONKit.m */; };
 		53F18BB01401532800E1A6E8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F18BAF1401532800E1A6E8 /* SystemConfiguration.framework */; };
 		53F18BB31401533100E1A6E8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F18BB21401533100E1A6E8 /* CFNetwork.framework */; };
 		53F18BB51401538800E1A6E8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F18BB41401538800E1A6E8 /* libz.dylib */; };
@@ -58,12 +59,6 @@
 		53FFD10A1401234C00E6B764 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0EC1401234C00E6B764 /* ASIHTTPRequest.m */; };
 		53FFD10B1401234C00E6B764 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0F01401234C00E6B764 /* ASIInputStream.m */; };
 		53FFD10C1401234C00E6B764 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0F21401234C00E6B764 /* ASINetworkQueue.m */; };
-		53FFD10D1401234C00E6B764 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0F71401234C00E6B764 /* NSObject+SBJSON.m */; };
-		53FFD10E1401234C00E6B764 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0F91401234C00E6B764 /* NSString+SBJSON.m */; };
-		53FFD10F1401234C00E6B764 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0FB1401234C00E6B764 /* SBJSON.m */; };
-		53FFD1101401234C00E6B764 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0FD1401234C00E6B764 /* SBJsonBase.m */; };
-		53FFD1111401234C00E6B764 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD0FF1401234C00E6B764 /* SBJsonParser.m */; };
-		53FFD1121401234C00E6B764 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD1011401234C00E6B764 /* SBJsonWriter.m */; };
 		53FFD1131401234C00E6B764 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD1041401234C00E6B764 /* Reachability.m */; };
 		53FFD117140123C200E6B764 /* DKFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFD116140123C200E6B764 /* DKFile.m */; };
 		53FFD119140123F400E6B764 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FFD118140123F400E6B764 /* MobileCoreServices.framework */; };
@@ -129,6 +124,8 @@
 		53876B97140A1BDA009F8171 /* MockFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockFileUpload.m; sourceTree = "<group>"; };
 		53876BE8140A265A009F8171 /* MockDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockDataObject.h; sourceTree = "<group>"; };
 		53876BE9140A265A009F8171 /* MockDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockDataObject.m; sourceTree = "<group>"; };
+		53B2F5B7140E0232003A5CA2 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = External/JSONKit/JSONKit.h; sourceTree = SOURCE_ROOT; };
+		53B2F5B8140E0232003A5CA2 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = External/JSONKit/JSONKit.m; sourceTree = SOURCE_ROOT; };
 		53F18BAF1401532800E1A6E8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		53F18BB21401533100E1A6E8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		53F18BB41401538800E1A6E8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
@@ -189,19 +186,6 @@
 		53FFD0F11401234C00E6B764 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
 		53FFD0F21401234C00E6B764 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
 		53FFD0F31401234C00E6B764 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
-		53FFD0F51401234C00E6B764 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		53FFD0F61401234C00E6B764 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		53FFD0F71401234C00E6B764 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		53FFD0F81401234C00E6B764 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		53FFD0F91401234C00E6B764 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		53FFD0FA1401234C00E6B764 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
-		53FFD0FB1401234C00E6B764 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		53FFD0FC1401234C00E6B764 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		53FFD0FD1401234C00E6B764 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		53FFD0FE1401234C00E6B764 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		53FFD0FF1401234C00E6B764 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		53FFD1001401234C00E6B764 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		53FFD1011401234C00E6B764 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		53FFD1031401234C00E6B764 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		53FFD1041401234C00E6B764 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		53FFD115140123C200E6B764 /* DKFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DKFile.h; path = DKFile/Classes/DKFile.h; sourceTree = "<group>"; };
@@ -360,7 +344,7 @@
 				53F18BC1140153C400E1A6E8 /* RegexKitLite */,
 				53FFD114140123BA00E6B764 /* DKFile */,
 				53FFD0DF1401234C00E6B764 /* ASIHTTPRequest */,
-				53FFD0F41401234C00E6B764 /* JSON */,
+				53FFD0F41401234C00E6B764 /* JSONKit */,
 				53FFD1021401234C00E6B764 /* Reachability */,
 				537874C214010A5700D9B746 /* Expecta */,
 			);
@@ -588,23 +572,13 @@
 			path = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
-		53FFD0F41401234C00E6B764 /* JSON */ = {
+		53FFD0F41401234C00E6B764 /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
-				53FFD0F51401234C00E6B764 /* JSON.h */,
-				53FFD0F61401234C00E6B764 /* NSObject+SBJSON.h */,
-				53FFD0F71401234C00E6B764 /* NSObject+SBJSON.m */,
-				53FFD0F81401234C00E6B764 /* NSString+SBJSON.h */,
-				53FFD0F91401234C00E6B764 /* NSString+SBJSON.m */,
-				53FFD0FA1401234C00E6B764 /* SBJSON.h */,
-				53FFD0FB1401234C00E6B764 /* SBJSON.m */,
-				53FFD0FC1401234C00E6B764 /* SBJsonBase.h */,
-				53FFD0FD1401234C00E6B764 /* SBJsonBase.m */,
-				53FFD0FE1401234C00E6B764 /* SBJsonParser.h */,
-				53FFD0FF1401234C00E6B764 /* SBJsonParser.m */,
-				53FFD1001401234C00E6B764 /* SBJsonWriter.h */,
-				53FFD1011401234C00E6B764 /* SBJsonWriter.m */,
+				53B2F5B7140E0232003A5CA2 /* JSONKit.h */,
+				53B2F5B8140E0232003A5CA2 /* JSONKit.m */,
 			);
+			name = JSONKit;
 			path = JSON;
 			sourceTree = "<group>";
 		};
@@ -692,12 +666,6 @@
 				53FFD10A1401234C00E6B764 /* ASIHTTPRequest.m in Sources */,
 				53FFD10B1401234C00E6B764 /* ASIInputStream.m in Sources */,
 				53FFD10C1401234C00E6B764 /* ASINetworkQueue.m in Sources */,
-				53FFD10D1401234C00E6B764 /* NSObject+SBJSON.m in Sources */,
-				53FFD10E1401234C00E6B764 /* NSString+SBJSON.m in Sources */,
-				53FFD10F1401234C00E6B764 /* SBJSON.m in Sources */,
-				53FFD1101401234C00E6B764 /* SBJsonBase.m in Sources */,
-				53FFD1111401234C00E6B764 /* SBJsonParser.m in Sources */,
-				53FFD1121401234C00E6B764 /* SBJsonWriter.m in Sources */,
 				53FFD1131401234C00E6B764 /* Reachability.m in Sources */,
 				53FFD117140123C200E6B764 /* DKFile.m in Sources */,
 				53F18BC4140153C400E1A6E8 /* ISO8601DateFormatter.m in Sources */,
@@ -732,6 +700,7 @@
 				53156492140360A9009A79E5 /* DKAPIProgressSpec.m in Sources */,
 				53876B98140A1BDA009F8171 /* MockFileUpload.m in Sources */,
 				53876BEA140A265A009F8171 /* MockDataObject.m in Sources */,
+				53B2F5B9140E0232003A5CA2 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
