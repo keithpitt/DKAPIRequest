@@ -1,0 +1,22 @@
+# This is a generated version of the vendorspec. Please change the
+# values to suit your library.
+
+Vendor::Spec.new do |s|
+
+  s.name        = "DKAPIRequest"
+  s.version     = "0.1"
+
+  s.authors     = "keithpitt"
+  s.email       = "me@keithpitt.com"
+  s.description = "Classes that make it easy to make API requests to Ruby on Rails REST apps"
+
+  s.source      = "https://github.com/keithpitt/DKAPIRequest"
+
+  s.files       = `git ls-files Classes`.split("\n")
+
+  s.dependency  "ASIHTTPRequest"
+  s.dependency  "DKFile", "0.1"
+  s.dependency  "DKSupport", "0.1"
+  s.dependency  "JSONKit", "1.4"
+
+end
