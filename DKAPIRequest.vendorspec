@@ -4,7 +4,7 @@
 Vendor::Spec.new do |s|
 
   s.name        = "DKAPIRequest"
-  s.version     = "0.1"
+  s.version     = "0.1.1"
 
   s.authors     = "keithpitt"
   s.email       = "me@keithpitt.com"
@@ -14,7 +14,7 @@ Vendor::Spec.new do |s|
 
   s.files       = `git ls-files Classes`.split("\n")
 
-  s.dependency  "ASIHTTPRequest"
+  s.dependency  "ASIHTTPRequest", "1.8.1"
   s.dependency  "DKFile", "0.1"
   s.dependency  "DKSupport", "0.1"
   s.dependency  "JSONKit", "1.4"
